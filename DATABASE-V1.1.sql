@@ -16,7 +16,6 @@ CREATE TABLE users
   verificationCode VARCHAR(255),
   role enum('admin','user') default 'user' NOT NULL,
   PRIMARY KEY (idUser),
-  UNIQUE (email)
 );
 
 CREATE TABLE products
