@@ -17,14 +17,22 @@ https://miro.com/app/board/uXjVOe1R7fg=/?invite_link_id=49270183990
 
    git checkout -b **nombreDeLaRama-tuNombre**
 
-3. Una vez hemos comprobado que todo funciona ejecutamos:
+## INSTALAR NPM Y HACER MODIFICACIONES
+
+1. Abrir el vsCode donde clonamos el repositorio.
+
+2. En la terminal integrada ejecutar: **npm install** . Se instalarán todos los paquetes de npm.
+
+3. Copiamos el **template.env**. En la terminal:
+
+   cp template.env .env
+
+4. Rellenamos manualmente el **.env**. Una vez hecho esto ya podemos hacer las modificaciones que querramos en el proyecto.
+
+5. Para iniciar el nodemon ejecutar en la terminal integrada: **npm run dev**.
+
+6. Una vez hemos comprobado que todo funciona ejecutamos:
 
    git add .
    git commit -m "**mensaje descriptivo de lo que hemos hecho**"
-   git push --set-upstream origin **nombreDeLaRama**
-
-## INSTALAR NPM
-
-1. Abrir el vsCode donde clonamos el repositorio.
-2. En la terminal integrada ejecutar: "npm install" -> se instalarán todos los paquetes de npm.
-3. Para iniciar el nodemon ejecutar: "npm run dev".
+   git push --set-upstream origin **nombreDeLaRama-tuNombre**
