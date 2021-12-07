@@ -34,5 +34,7 @@ https://miro.com/app/board/uXjVOe1R7fg=/?invite_link_id=49270183990
 6. Una vez hemos comprobado que todo funciona ejecutamos:
 
    git add .
+
    git commit -m "**_mensaje descriptivo de lo que hemos hecho_**"
+
    git push --set-upstream origin **_nombreDeLaRama-tuNombre_**
