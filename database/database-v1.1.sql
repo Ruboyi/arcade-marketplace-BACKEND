@@ -1,3 +1,6 @@
+-- ARCADE MARKETPLACE DATABASE
+-- -----------------------------------------------------
+
 DROP DATABASE IF EXISTS arcade;
 CREATE DATABASE arcade;
 USE arcade;
