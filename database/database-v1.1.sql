@@ -18,7 +18,7 @@ CREATE TABLE users
   updatedAt DATE,
   verificationCode VARCHAR(255),
   role enum('admin','user') default 'user' NOT NULL,
-  PRIMARY KEY (idUser),
+  PRIMARY KEY (idUser)
 );
 
 CREATE TABLE products
