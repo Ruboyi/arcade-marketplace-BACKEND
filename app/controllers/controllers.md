@@ -2,15 +2,15 @@
 
 Los controllers estarán ubicados en carpetas (users, products, etc) y cada uno tendrá un nombre con este formato:
 
-- _method_ -**nombreDeLaFuncionEnCamelCase**-controller.js
+- _method_ -**nombre-de-la-funcion**-controller.js
 
 El **_method_** puede ser get, post, put, delete, etc.
 
 ## El template para el controller es algo así:
 
 ```javascript
-const createJsonError = require('../'); // completar
-const throwJsonError = require('../'); // completar
+const createJsonError = require("../"); // completar
+const throwJsonError = require("../"); // completar
 // require function from repositories (DB)
 
 async function nombreFuncion(req, res) {
