@@ -1,3 +1,6 @@
+-- ARCADE MARKETPLACE DATABASE
+-- -----------------------------------------------------
+
 DROP DATABASE IF EXISTS arcade;
 CREATE DATABASE arcade;
 USE arcade;
@@ -16,7 +19,6 @@ CREATE TABLE users
   verificationCode VARCHAR(255),
   role enum('admin','user') default 'user' NOT NULL,
   PRIMARY KEY (idUser),
-  UNIQUE (email)
 );
 
 CREATE TABLE products
