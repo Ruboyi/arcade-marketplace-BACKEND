@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const getPool = require("../infrastructure/database-infrastructure");
+const getPool = require('../infrastructure/database-infrastructure');
 
 async function findAllProducts() {
   const pool = await getPool();
@@ -23,13 +23,25 @@ async function addProduct(product) {
         idUser
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-    const {title, description, price, location, category, state, idUser} = product;
-    const [created] = await pool.query(sql, [ title, description, price, location, now, category, state, idUser]);
+  const { title, description, price, location, category, state, idUser } = product;
+  const [created] = await pool.query(sql, [title, description, price, location, now, category, state, idUser]);
 
-    return created.insertId;
+  return created.insertId;
+}
+
+async function findProductsByUserId(idUser) {
+  const pool = await getPool();
+  const sql = `
+  SELECT products.*, orders.status FROM products 
+  INNER JOIN orders ON products.idProduct = orders.idProduct 
+  WHERE id = ?
+  `;
+  const [products] = await pool.query(sql, idUser);
+  return products;
 }
 
 module.exports = {
   findAllProducts,
   addProduct,
+  findProductsByUserId,
 };
