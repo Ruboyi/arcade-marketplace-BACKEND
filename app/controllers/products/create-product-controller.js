@@ -11,14 +11,16 @@ const schema = Joi.object().keys({
     location: Joi.string().min(3).max(120).required(),
     category: Joi.string().valid('consolas', 'videojuegos', 'accesorios', 'arcades'),
     state: Joi.string().valid('nuevo', 'seminuevo', 'usado'),
- //validamos el idUser ?
+    idUser: Joi.number().integer().positive().required(),
 });
 
 async function createProduct(req, res) {
     try {
         const {body} = req;
-        await schema.validateAsync(body);
-        const productId = await addProduct(body);
+        const {idUser} = req.auth;
+        const product = {...body, idUser: idUser};
+        await schema.validateAsync(product);
+        const productId = await addProduct(product);
 
         res.status(201);
         res.send({message: `Producto ${productId} creado correctamente`})
