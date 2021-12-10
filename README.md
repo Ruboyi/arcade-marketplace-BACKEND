@@ -23,17 +23,21 @@ https://miro.com/app/board/uXjVOe1R7fg=/?invite_link_id=49270183990
 
 2.  En la terminal integrada ejecutar: **_npm install_** . Se instalarán todos los paquetes de npm.
 
-3.  Copiamos el **_template.env_**. En la terminal:
+- Pasos 3. y 4. solo hacen falta si no tenemos el archivo **_.env_**, si ya lo tenemos podemos ir directo al paso 5.
 
-    > cp template.env .env
+  3.  Copiamos el **_template.env_**. En la terminal:
 
-4.  Rellenamos manualmente el **_.env_**.
+      > cp template.env .env
+
+  4.  Rellenamos manualmente el **_.env_**.
 
 5.  Para iniciar el nodemon ejecutar en la terminal integrada: **_npm run dev_**.
 
 6.  Ya podemos hacer las modificaciones que querramos en el proyecto.
 
 7.  Una vez hemos comprobado que todo funciona ejecutamos:
+
+    > git status
 
     > git add .
 

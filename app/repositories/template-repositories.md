@@ -4,7 +4,7 @@ Cada repository tendrá un nombre con este formato:
 
 - **_table_** -repository.js
 
-El **_table_** puede ser users, products, reviews, etc.
+El **_table_** puede ser users, products, orders, etc.
 
 Una vez dentro del archivo y antes que nada, se hace un require a la función getPool():
 
