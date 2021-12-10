@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const getAllOrdersByProductId = require('../controllers/orders/get-all-orders-by-product-id-controller');
 const createProduct = require('../controllers/products/create-product-controller');
 const getAllProducts = require('../controllers/products/get-all-products-controller');
 const validateAuth = require('../middlewares/validate-auth');
@@ -17,5 +18,7 @@ router.route('/').get(getAllProducts);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route('/').all(validateAuth).post(createProduct);
+
+router.route('/:idProduct/orders').all(validateAuth).get(getAllOrdersByProductId);
 
 module.exports = router;
