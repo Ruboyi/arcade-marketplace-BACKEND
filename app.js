@@ -18,8 +18,10 @@ app.use(express.static("public"));
 //const usersRouter = require('./app/routes/users-routes');
 const productsRouter = require("./app/routes/products-routes");
 const usersRouter = require("./app/routes/users-routes");
+const ordersRouter = require("./app/routes/orders-routes");
 
 app.use("/api/v1/products/", productsRouter);
 app.use("/api/v1/users/", usersRouter);
+app.use("/api/v1/orders/", ordersRouter);
 
 app.listen(PORT, () => console.log("Running", PORT));
