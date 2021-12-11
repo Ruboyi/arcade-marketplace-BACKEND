@@ -40,8 +40,30 @@ async function findProductsByUserId(idUser) {
   return products;
 }
 
+async function findProductByidProduct(idProduct){
+  const pool = await getPool();
+  const sql = 'SELECT * FROM products WHERE idProduct = ?'
+  const [product] = await pool.query(sql, idProduct);
+
+  return product[0];
+}
+
+async function updateProduct(idUser, product) {
+  const { title, description, price, location, category, state } = product;
+  const now = new Date();
+  const pool = await getPool();
+  const sql = `
+    UPDATE products SET title = ?, description = ?, price = ?, location = ?, category = ?, 
+    state = ?, updatedAt = ? WHERE idUser = ?`;
+  const [result] = await pool.query(sql, [ title, description, price, location, category, state, now, idUser]);
+
+  return (result.affectedRows === 1);
+}
+
 module.exports = {
   findAllProducts,
   addProduct,
   findProductsByUserId,
+  updateProduct,
+  findProductByidProduct,
 };
