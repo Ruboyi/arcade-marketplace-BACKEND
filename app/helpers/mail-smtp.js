@@ -1,6 +1,6 @@
 "use strict";
 const nodemailer = require("nodemailer");
-const { HTTP_SERVER_DOMAIN, SMTP_PORT, SMTP_HOST, SMTP_USER, SMTP_PASS } =
+const { HTTP_SERVER, SMTP_PORT, SMTP_HOST, SMTP_USER, SMTP_PASS } =
   process.env;
 
 const transporter = nodemailer.createTransport({
@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendMailRegister(name, email, code) {
-  const linkActivation = `http://localhost:3000/api/v1/users/activation?code=${code}`;
+  const linkActivation = `${HTTP_SERVER}/api/v1/users/activation?code=${code}`;
 
   const mailData = {
     from: SMTP_USER,

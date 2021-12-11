@@ -7,6 +7,7 @@ const getUserById = require("../controllers/users/get-user-by-id-controller");
 const loginUser = require("../controllers/users/login-user-controller");
 const registerUser = require("../controllers/users/register-user-controller");
 const updateUser = require("../controllers/users/update-user-controller");
+const uploadImageProfile = require("../controllers/users/upload-user-image-profile-controller");
 const validateAuth = require("../middlewares/validate-auth");
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.route("/:idUser").get(getUserById);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route("/").all(validateAuth).put(updateUser);
+router.route('/upload').all(validateAuth).post(uploadImageProfile);
 
 module.exports = router;
