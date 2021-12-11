@@ -16,7 +16,7 @@ const { sendMailRegister } = require("../../helpers/mail-smtp");
 const schema = Joi.object().keys({
   nameUser: Joi.string().min(3).max(20).required(),
   email: Joi.string().email().required(),
-  phone: Joi.string().length(9).optional(),
+  phone: Joi.any().optional(),
   password: Joi.string().optional(),
   repeatPassword: Joi.string().optional(),
 });
