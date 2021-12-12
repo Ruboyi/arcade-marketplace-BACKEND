@@ -1,13 +1,16 @@
-'use strict';
+"use strict";
 
-const createJsonError = require('../../errors/create-json-error');
-const throwJsonError = require('../../errors/throw-json-error');
-const randomstring = require('randomstring');
-const path = require('path');
-const fs = require('fs');
-const { findUserProfileImage, uploadUserProfileImage } = require('../../repositories/users-repository');
+const createJsonError = require("../../errors/create-json-error");
+const throwJsonError = require("../../errors/throw-json-error");
+const randomstring = require("randomstring");
+const path = require("path");
+const fs = require("fs");
+const {
+  findUserProfileImage,
+  uploadUserProfileImage,
+} = require("../../repositories/users-repository");
 
-const validExtensions = ['.jpeg', '.jpg', '.png'];
+const validExtensions = [".jpeg", ".jpg", ".png"];
 
 async function uploadImageProfile(req, res) {
   try {
@@ -15,13 +18,13 @@ async function uploadImageProfile(req, res) {
     const { files } = req;
 
     if (!files || Object.keys(files).length === 0) {
-      throwJsonError(400, 'No se ha selecionado ningún fichero');
+      throwJsonError(400, "No se ha selecionado ningún fichero");
     }
     const { profileImage } = files;
     const extension = path.extname(profileImage.name);
 
     if (!validExtensions.includes(extension)) {
-      throwJsonError(400, 'Formato no valido');
+      throwJsonError(400, "Formato no valido");
     }
 
     const { HTTP_SERVER, PATH_USER_IMAGE } = process.env;
@@ -29,9 +32,7 @@ async function uploadImageProfile(req, res) {
     const pathProfileImageFolder = `${__dirname}/../../../public/${PATH_USER_IMAGE}`;
 
     if (user.image) {
-      await fs.unlink(`${pathProfileImageFolder}/${user.image}`, () => {
-        console.log('Borrada imagen de perfil correctamente');
-      });
+      await fs.unlink(`${pathProfileImageFolder}/${user.image}`, () => {});
     }
 
     const random = randomstring.generate(10);
