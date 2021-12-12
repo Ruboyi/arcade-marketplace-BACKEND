@@ -88,7 +88,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `arcade`.`orders` ;
 
 CREATE TABLE IF NOT EXISTS `arcade`.`orders` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `idOrders` INT NOT NULL AUTO_INCREMENT,
   `idUserBuyer` INT NOT NULL,
   `idProduct` INT NOT NULL,
   `orderDate` DATE NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `arcade`.`orders` (
   `saleLocation` VARCHAR(255) NOT NULL,
   `saleMessage` VARCHAR(255) NULL DEFAULT NULL,
   `saleTypeOfContact` ENUM('phone', 'email') NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`idOrders`),
   INDEX `idUserBuyer` (`idUserBuyer` ASC) VISIBLE,
   INDEX `idProduct` (`idProduct` ASC) VISIBLE,
   CONSTRAINT `orders_ibfk_1`
@@ -143,6 +143,8 @@ DROP TABLE IF EXISTS `arcade`.`productReports` ;
 CREATE TABLE IF NOT EXISTS `arcade`.`productReports` (
   `idProductReport` INT NOT NULL AUTO_INCREMENT,
   `reason` ENUM('1', '2', '3', '4') NULL DEFAULT NULL,
+  `reportDate` DATE NOT NULL,
+  `isChecked` TINYINT(1) NOT NULL DEFAULT '0',
   `idUser` INT NOT NULL,
   `idProduct` INT NOT NULL,
   PRIMARY KEY (`idProductReport`),

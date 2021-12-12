@@ -33,31 +33,32 @@ async function findProductsByUserId(idUser) {
   const pool = await getPool();
   const sql = `
   SELECT products.*, orders.status FROM products 
-  INNER JOIN orders ON products.idProduct = orders.idProduct 
-  WHERE id = ?
+  LEFT JOIN orders ON products.idProduct = orders.idProduct 
+  WHERE idUser = ?
   `;
   const [products] = await pool.query(sql, idUser);
   return products;
 }
 
-async function findProductByidProduct(idProduct){
+async function findProductByidProduct(idProduct) {
   const pool = await getPool();
-  const sql = 'SELECT * FROM products WHERE idProduct = ?'
+  const sql = 'SELECT * FROM products WHERE idProduct = ?';
   const [product] = await pool.query(sql, idProduct);
 
   return product[0];
 }
 
-async function updateProduct(idUser, product) {
+async function updateProduct(idProduct, product) {
   const { title, description, price, location, category, state } = product;
+
   const now = new Date();
   const pool = await getPool();
   const sql = `
     UPDATE products SET title = ?, description = ?, price = ?, location = ?, category = ?, 
-    state = ?, updatedAt = ? WHERE idUser = ?`;
-  const [result] = await pool.query(sql, [ title, description, price, location, category, state, now, idUser]);
+    state = ?, updatedAt = ? WHERE idProduct = ?`;
+  const [result] = await pool.query(sql, [title, description, price, location, category, state, now, idProduct]);
 
-  return (result.affectedRows === 1);
+  return result.affectedRows === 1;
 }
 
 module.exports = {

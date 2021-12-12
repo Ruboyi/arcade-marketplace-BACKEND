@@ -9,13 +9,20 @@ const schema = Joi.number().positive().integer().required();
 
 async function getProductsByUserId(req, res) {
   try {
+    const { userId } = req.params;
+    await schema.validateAsync(userId);
     const { idUser } = req.auth;
-    await schema.validateAsync(idUser);
 
-    const products = await findProductsByUserId(idUser);
+    if (idUser !== Number(userId)) {
+      throwJsonError(400, 'Acceso denegado');
+    }
+
+    const products = await findProductsByUserId(userId);
+
     if (products.length === 0) {
       throwJsonError(400, 'No tienes productos');
     }
+
     res.status(200);
     res.send({ data: products });
   } catch (error) {
