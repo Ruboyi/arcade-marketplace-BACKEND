@@ -28,13 +28,8 @@ async function updateProductById(req, res) {
     }
 
     const { idUser: userId } = product;
-
-    if (userId !== idUser) {
+    if (Number(userId) !== idUser) {
       throwJsonError(400, 'Accion denegada');
-    }
-
-    if (!product) {
-      throwJsonError(400, 'El producto no existe');
     }
 
     const { body } = req;
