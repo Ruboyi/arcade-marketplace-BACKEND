@@ -19,6 +19,9 @@ async function getAllUserReviewsByUserId(req, res) {
       throwJsonError(400, "El usuario no existe");
     }
     const reviews = await findAllUserReviewsById(idUser);
+    if(reviews.length === 0) {
+      throwJsonError(400, "No hay comentarios para este usuario");
+    }
     res.status(200);
     res.send({ data: reviews });
   } catch (error) {
