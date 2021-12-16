@@ -26,7 +26,17 @@ async function removeMainImageByidProduct(idProduct) {
     return (result.affectedRows === 1);
 }
 
+async function findImagesByProductId(idProduct) {
+    const pool = await getPool();
+    const sql = `SELECT * FROM productImages WHERE idProduct = ?`;
+    const [images] = await pool.query(sql, idProduct);
+  
+    return images;
+}
+
+
 module.exports = {
     addImageByProductId,
     removeMainImageByidProduct,
+    findImagesByProductId
 }
