@@ -22,7 +22,7 @@ async function validateUser(req, res) {
     const user = await getUserByVerificationCode(code);
     const { nameUser, email } = user;
 
-    await sendMailCorrectValidation(nameUser, email);
+    // await sendMailCorrectValidation(nameUser, email);
 
     res.status(200);
     res.send({ message: 'Cuenta activada.' });
