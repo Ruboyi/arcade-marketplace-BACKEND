@@ -28,6 +28,20 @@ async function sendMailRegister(name, email, code) {
   }
 }
 
+async function sendMailCorrectValidation(name, email) {
+  const msg = {
+    to: email,
+    from: process.env.SENDGRID_FROM,
+    subject: 'Arcade Marketplace - Account Activated!',
+    text: `Hi ${name}, \n Your account was activated.`,
+    html: `<h1>Hi ${name},</h1> your account was activated.`,
+  };
+
+  const data = await sgMail.send(msg);
+  return data;
+}
+
 module.exports = {
   sendMailRegister,
+  sendMailCorrectValidation,
 };

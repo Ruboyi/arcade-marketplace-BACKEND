@@ -2,7 +2,7 @@
 
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
-const { sendMailCorrectValidation } = require('../../helpers/mail-smtp');
+const { sendMailCorrectValidation } = require('../../helpers/mail-smtp-SendGrid');
 const { activateUser, getUserByVerificationCode } = require('../../repositories/users-repository');
 
 async function validateUser(req, res) {
@@ -22,7 +22,7 @@ async function validateUser(req, res) {
     const user = await getUserByVerificationCode(code);
     const { nameUser, email } = user;
 
-    // await sendMailCorrectValidation(nameUser, email);
+    await sendMailCorrectValidation(nameUser, email);
 
     res.status(200);
     res.send({ message: 'Cuenta activada.' });
