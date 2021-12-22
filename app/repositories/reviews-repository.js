@@ -14,7 +14,7 @@ async function addReview(review) {
   const now = new Date();
   const sql = `INSERT
     INTO reviews (opinion, createdAt, rating, isSeller, idUserReviewer, idUser)
-    VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    VALUES (?, ?, ?, ?, ?, ?)`;
   const { opinion, rating, isSeller, idUserReviewer, idUser } = review;
   const [created] = await pool.query(sql, [
     opinion,

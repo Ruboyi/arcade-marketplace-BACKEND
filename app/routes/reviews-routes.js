@@ -8,5 +8,5 @@ const router = express.Router();
 
 //aqui van las rutas
 router.route("/:idUser").get(getAllUserReviewsByUserId);
-router.route("/:idUser").post(createReviewForIdUser);
+router.route("/:idUser").all(validateAuth).post(createReviewForIdUser);
 module.exports = router;
