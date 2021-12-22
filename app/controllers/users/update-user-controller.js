@@ -1,17 +1,12 @@
-"use strict";
+'use strict';
 
-const Joi = require("joi");
-const bcrypt = require("bcryptjs");
-const randomstring = require("randomstring");
-const {
-  addVerificationCode,
-  findUserByEmail,
-  findUserById,
-  udpateUserById,
-} = require("../../repositories/users-repository");
-const createJsonError = require("../../errors/create-json-error");
-const throwJsonError = require("../../errors/throw-json-error");
-const { sendMailRegister } = require("../../helpers/mail-smtp");
+const Joi = require('joi');
+const bcrypt = require('bcryptjs');
+const randomstring = require('randomstring');
+const { addVerificationCode, findUserByEmail, findUserById, udpateUserById } = require('../../repositories/users-repository');
+const createJsonError = require('../../errors/create-json-error');
+const throwJsonError = require('../../errors/throw-json-error');
+const { sendMailRegister } = require('../../helpers/mail-smtp-SendGrid');
 
 const schema = Joi.object().keys({
   nameUser: Joi.string().min(3).max(20).required(),
@@ -23,7 +18,7 @@ const schema = Joi.object().keys({
 
 const schemaPassword = Joi.object().keys({
   password: Joi.string().min(4).max(20).required(),
-  repeatPassword: Joi.ref("password"),
+  repeatPassword: Joi.ref('password'),
 });
 
 async function updateUser(req, res) {
@@ -38,7 +33,7 @@ async function updateUser(req, res) {
     const user = await findUserByEmail(email);
 
     if (user && user.idUser !== idUser) {
-      throwJsonError(409, "Ya existe un usuario con ese email");
+      throwJsonError(409, 'Ya existe un usuario con ese email');
     }
 
     let updatedPassword = userById.password;
