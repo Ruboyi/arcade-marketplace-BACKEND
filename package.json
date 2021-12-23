@@ -33,7 +33,6 @@
     "joi": "^17.5.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
-    "nodemailer": "^6.7.2",
     "randomstring": "^1.2.1",
     "sharp": "^0.29.3"
   }
