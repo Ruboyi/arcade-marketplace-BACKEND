@@ -25,5 +25,5 @@ router.route('/images/:idProduct').get(getImagesByProductId);
 router.route('/').all(validateAuth).post(createProduct);
 router.route('/user/:userId').all(validateAuth).get(getProductsByUserId);
 router.route('/:idProduct').all(validateAuth).put(updateProductById);
-router.route('/:idProduct/image').all(validateAuth).post(uploadProductImageById);
+router.route('/image/:idProduct').all(validateAuth).post(uploadProductImageById);
 module.exports = router;
