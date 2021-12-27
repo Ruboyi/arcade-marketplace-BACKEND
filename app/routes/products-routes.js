@@ -23,12 +23,9 @@ router.route("/:idProduct").get(getProductByIdProduct);
 router.route("/images/:idProduct").get(getImagesByProductId);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante):
 
-router.route("/").all(validateAuth).post(createProduct);
-router.route("/user/:userId").all(validateAuth).get(getProductsByUserId);
-router
-  .route("/:idProduct")
-  .all(validateAuth)
-  .put(updateProductById)
-  .delete(deleteProductById);
+router.route('/').all(validateAuth).post(createProduct);
+router.route('/user/:userId').all(validateAuth).get(getProductsByUserId);
+router.route('/:idProduct').all(validateAuth).put(updateProductById).delete(deleteProductById);
+router.route('/image/:idProduct').all(validateAuth).post(uploadProductImageById);
 
 module.exports = router;
