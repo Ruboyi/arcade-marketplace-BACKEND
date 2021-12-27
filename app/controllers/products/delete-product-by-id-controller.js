@@ -12,15 +12,15 @@ const schema = Joi.number().integer().positive().required();
 async function deleteProductById(req, res) {
   try {
     const { idProduct } = req.params;
-    const { idUser } = req.auth;
-    const { idUser: userId } = product;
-    if (idUser !== Number(userId)) {
-      throwJsonError(400, "Acceso denegado");
-    }
     await schema.validateAsync(idProduct);
     const product = await findProductByidProduct(idProduct);
     if (!product) {
       throwJsonError(400, "Producto no existe");
+    }
+    const { idUser } = req.auth;
+    const { idUser: userId } = product;
+    if (idUser !== Number(userId)) {
+      throwJsonError(400, "Acceso denegado");
     }
     await removeProductById(idProduct);
 
