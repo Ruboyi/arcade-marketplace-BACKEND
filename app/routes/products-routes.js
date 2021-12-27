@@ -30,8 +30,5 @@ router
   .all(validateAuth)
   .put(updateProductById)
   .delete(deleteProductById);
-router
-  .route("/:idProduct/image")
-  .all(validateAuth)
-  .post(uploadProductImageById);
+
 module.exports = router;
