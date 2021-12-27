@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const getPool = require('../infrastructure/database-infrastructure');
+const getPool = require("../infrastructure/database-infrastructure");
 
 async function findAllProducts() {
   const pool = await getPool();
@@ -23,8 +23,18 @@ async function addProduct(product) {
         idUser
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-  const { title, description, price, location, category, state, idUser } = product;
-  const [created] = await pool.query(sql, [title, description, price, location, now, category, state, idUser]);
+  const { title, description, price, location, category, state, idUser } =
+    product;
+  const [created] = await pool.query(sql, [
+    title,
+    description,
+    price,
+    location,
+    now,
+    category,
+    state,
+    idUser,
+  ]);
 
   return created.insertId;
 }
@@ -42,7 +52,7 @@ async function findProductsByUserId(idUser) {
 
 async function findProductByidProduct(idProduct) {
   const pool = await getPool();
-  const sql = 'SELECT * FROM products WHERE idProduct = ?';
+  const sql = "SELECT * FROM products WHERE idProduct = ?";
   const [product] = await pool.query(sql, idProduct);
 
   return product[0];
@@ -56,9 +66,25 @@ async function updateProduct(idProduct, product) {
   const sql = `
     UPDATE products SET title = ?, description = ?, price = ?, location = ?, category = ?, 
     state = ?, updatedAt = ? WHERE idProduct = ?`;
-  const [result] = await pool.query(sql, [title, description, price, location, category, state, now, idProduct]);
+  const [result] = await pool.query(sql, [
+    title,
+    description,
+    price,
+    location,
+    category,
+    state,
+    now,
+    idProduct,
+  ]);
 
   return result.affectedRows === 1;
+}
+async function removeProductById(idProduct) {
+  const pool = await getPool();
+  const sql = "DELETE FROM products WHERE idProduct = ?";
+  await pool.query(sql, idProduct);
+
+  return true;
 }
 
 module.exports = {
@@ -67,4 +93,5 @@ module.exports = {
   findProductsByUserId,
   updateProduct,
   findProductByidProduct,
+  removeProductById,
 };
