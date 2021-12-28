@@ -95,16 +95,24 @@ async function addVerificationCode(idUser, code) {
 
 async function findUserProfileImage(idUser) {
   const pool = await getPool();
-  const sql = 'SELECT image FROM users WHERE idUser = ?'
+  const sql = "SELECT image FROM users WHERE idUser = ?";
   const [user] = await pool.query(sql, idUser);
 
   return user[0];
 }
 
-async function uploadUserProfileImage (idUser, image) {
+async function uploadUserProfileImage(idUser, image) {
   const pool = await getPool();
-  const sql = 'UPDATE users SET image = ? WHERE idUser = ?';
+  const sql = "UPDATE users SET image = ? WHERE idUser = ?";
   await pool.query(sql, [image, idUser]);
+
+  return true;
+}
+
+async function removeUserById(id) {
+  const pool = await getPool();
+  const sql = "DELETE FROM users WHERE idUser = ?";
+  await pool.query(sql, id);
 
   return true;
 }
@@ -119,4 +127,5 @@ module.exports = {
   addVerificationCode,
   findUserProfileImage,
   uploadUserProfileImage,
+  removeUserById,
 };
