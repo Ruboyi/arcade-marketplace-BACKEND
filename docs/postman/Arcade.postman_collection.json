@@ -231,6 +231,71 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "DeleteProductById",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{backendURL}}/api/v1/products/:idProduct",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								":idProduct"
+							],
+							"variable": [
+								{
+									"key": "idProduct",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteImageById",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{backendURL}}/api/v1/products/image/:idImage",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"image",
+								":idImage"
+							],
+							"variable": [
+								{
+									"key": "idImage",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -398,6 +463,38 @@
 								"v1",
 								"users",
 								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserById",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "string"
+							}
+						],
+						"url": {
+							"raw": "{{backendURL}}/api/v1/users/:userId",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
 							]
 						}
 					},
