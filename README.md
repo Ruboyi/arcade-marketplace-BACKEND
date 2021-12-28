@@ -17,25 +17,25 @@ https://miro.com/app/board/uXjVOe1R7fg=/?invite_link_id=49270183990
 
     > git checkout -b **_nombreDeLaRama-tuNombre_**
 
-## INSTALAR NPM Y HACER MODIFICACIONES
+## INSTALAR NPM, INICIALIZAR DB Y HACER MODIFICACIONES
 
-1.  Abrir el vsCode donde clonamos el repositorio.
+1.  Abrir el vsCode donde clonamos el repositorio. Ejecutamos **_git status_** en la terminal integrada para comprobar que estamos en la rama correcta.
 
 2.  En la terminal integrada ejecutar: **_npm install_** . Se instalarán todos los paquetes de npm.
 
-- Pasos 3. y 4. solo hacen falta si no tenemos el archivo **_.env_**, si ya lo tenemos podemos ir directo al paso 5.
+3.  Copiamos el **_template.env_**. En la terminal:
 
-  3.  Copiamos el **_template.env_**. En la terminal:
+    > cp template.env .env
 
-      > cp template.env .env
+4.  Rellenamos manualmente el **_.env_**.
 
-  4.  Rellenamos manualmente el **_.env_**.
+5.  En la terminal integrada ejecutar: **_node initDB.js_** . Se inicializará la DataBase con usuarios, productos y solicitudes de compra.
 
-5.  Para iniciar el nodemon ejecutar en la terminal integrada: **_npm run dev_**.
+6.  Para iniciar el nodemon ejecutar en la terminal integrada: **_npm run dev_**.
 
-6.  Ya podemos hacer las modificaciones que querramos en el proyecto.
+7.  Ya podemos hacer las modificaciones que querramos en el proyecto.
 
-7.  Una vez hemos comprobado que todo funciona ejecutamos:
+8.  Una vez hemos comprobado que todo funciona ejecutamos:
 
     > git status
 

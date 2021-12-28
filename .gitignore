@@ -1,3 +1,9 @@
+# git ignore!
 .env
 node_modules/
 package-lock.json
+.vscode
+test.session.sql
+# avatars and product images
+public/avatars/
+public/products/
