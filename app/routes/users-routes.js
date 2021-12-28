@@ -26,6 +26,6 @@ router.route("/:idUser").get(getUserById);
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route("/").all(validateAuth).put(updateUser);
 router.route("/upload").all(validateAuth).post(uploadImageProfile);
-router.route("/:id").all(validateAuth).delete(deleteUserById);
+router.route("/:userId").all(validateAuth).delete(deleteUserById);
 
 module.exports = router;
