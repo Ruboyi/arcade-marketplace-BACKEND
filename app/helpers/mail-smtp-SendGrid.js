@@ -41,7 +41,25 @@ async function sendMailCorrectValidation(name, email) {
   return data;
 }
 
+async function sendMailPurchaseOrderNotif(name, email) {
+  const msg = {
+    to: email,
+    from: process.env.SENDGRID_FROM,
+    subject: 'Arcade Marketplace - New Message!',
+    text: `Hi ${name},
+    There's someone interested in one of your products.
+    Check the app to see more details.`,
+    html: `<h1>Hi ${name},</h1>
+    <p>There's someone interested in one of your products.
+    Check the app to see more details.</p>`,
+  };
+
+  const data = await sgMail.send(msg);
+  return data;
+}
+
 module.exports = {
   sendMailRegister,
   sendMailCorrectValidation,
+  sendMailPurchaseOrderNotif,
 };
