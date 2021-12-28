@@ -2,6 +2,7 @@
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const faker = require('faker');
+const randomstring = require('randomstring');
 const getPool = require('./app/infrastructure/database-infrastructure');
 
 // number of random users
@@ -11,9 +12,11 @@ let connection;
 async function initDB() {
   try {
     connection = await getPool();
-
+    // drop and create database arcade
+    await connection.query('DROP DATABASE IF EXISTS arcade');
+    await connection.query('CREATE DATABASE IF NOT EXISTS arcade DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci');
+    // use database arcade
     await connection.query('USE arcade');
-
     // delete pre-existing tables
     await connection.query('DROP TABLE IF EXISTS favorites');
     await connection.query('DROP TABLE IF EXISTS orders');
@@ -22,8 +25,6 @@ async function initDB() {
     await connection.query('DROP TABLE IF EXISTS products');
     await connection.query('DROP TABLE IF EXISTS reviews');
     await connection.query('DROP TABLE IF EXISTS users');
-
-    console.log('Tables deleted');
 
     // create table users
     await connection.query(`
@@ -41,7 +42,6 @@ async function initDB() {
         role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
         PRIMARY KEY (idUser))
     `);
-
     // create table products
     await connection.query(`
     CREATE TABLE IF NOT EXISTS products (
@@ -59,10 +59,10 @@ async function initDB() {
         PRIMARY KEY (idProduct),
         INDEX idUser (idUser ASC) VISIBLE,
         CONSTRAINT products_ibfk_1
-          FOREIGN KEY (idUser)
-          REFERENCES arcade.users (idUser))
+        FOREIGN KEY (idUser)
+        REFERENCES arcade.users (idUser)
+        ON DELETE CASCADE)
     `);
-
     // create table favorites
     await connection.query(`
     CREATE TABLE IF NOT EXISTS favorites (
@@ -79,7 +79,6 @@ async function initDB() {
           FOREIGN KEY (idProduct)
           REFERENCES arcade.products (idProduct))
     `);
-
     // create table orders
     await connection.query(`
     CREATE TABLE IF NOT EXISTS orders (
@@ -106,7 +105,6 @@ async function initDB() {
           FOREIGN KEY (idProduct)
           REFERENCES arcade.products (idProduct))
     `);
-
     // create table productImages
     await connection.query(`
     CREATE TABLE IF NOT EXISTS productImages (
@@ -118,9 +116,9 @@ async function initDB() {
         INDEX idProduct (idProduct ASC) VISIBLE,
         CONSTRAINT productImages_ibfk_1
           FOREIGN KEY (idProduct)
-          REFERENCES arcade.products (idProduct))
+          REFERENCES arcade.products (idProduct)
+          ON DELETE CASCADE)
     `);
-
     // create table productReports
     await connection.query(`
     CREATE TABLE IF NOT EXISTS productReports (
@@ -140,7 +138,6 @@ async function initDB() {
           FOREIGN KEY (idProduct)
           REFERENCES arcade.products (idProduct))
     `);
-
     // create table reviews
     await connection.query(`
     CREATE TABLE IF NOT EXISTS reviews (
@@ -157,10 +154,11 @@ async function initDB() {
           FOREIGN KEY (idUser)
           REFERENCES arcade.users (idUser))
     `);
-
-    console.log('Tables created');
+    console.log('DB restarted');
 
     // generate random users
+    console.log('Creating random users...');
+
     for (let i = 0; i < users; i++) {
       const name = faker.name.firstName();
       const number = '123';
@@ -168,29 +166,149 @@ async function initDB() {
       const email = faker.internet.email(name, number, domain);
       const password = '123456';
       const passwordHash = await bcrypt.hash(password, 12);
+      const image = 'https://thispersondoesnotexist.com/image';
+
       const now = new Date().toISOString();
       const mySQLDateString = now.slice(0, 19).replace('T', ' ');
+      const verificationCode = randomstring.generate(64);
 
       // insert user
       await connection.query(`
-        INSERT INTO users(nameUser, email, password, createdAt, verifiedAt, role) 
+        INSERT INTO users(nameUser, email, password, image, createdAt, verifiedAt, verificationCode, role) 
         VALUES (
             "${name}",
             "${email}",
             "${passwordHash}",
+            "${image}",
             "${mySQLDateString}",
             "${mySQLDateString}",
+            "${verificationCode}",
             "user"
         )
         `);
     }
 
-    // generate random products
+    // generate 10 products
+    console.log('Creating products...');
+    await connection.query(`
+    INSERT INTO products(
+      title,
+      description,
+      price,
+      location,
+      createdAt,
+      category,
+      state,
+      idUser
+      )
+    VALUES(
+          'Nintendo 64',
+          'La nintendo está bien',
+          '50',
+          'A Coruña',
+          '2021-12-28 12:16:42',
+          'consolas',
+          'seminuevo',
+          '1'
+      ),
+      (
+          'GameCube',
+          'La GameCube está como nueva',
+          '30',
+          'A Coruña',
+          '2021-12-28 12:16:42',
+          'consolas',
+          'seminuevo',
+          '2'
+      ),
+      (
+          'Mando Play Station 1',
+          'Funciona bien',
+          '20',
+          'A Coruña',
+          '2021-12-20 12:16:42',
+          'accesorios',
+          'seminuevo',
+          '4'
+      ),
+      (
+          'Super Mario Bros',
+          'esta bueno',
+          '75',
+          'A Coruña',
+          '2021-12-25 12:16:42',
+          'videojuegos',
+          'usado',
+          '4'
+      ),
+      (
+          'DOOM',
+          'esta bueno',
+          '15',
+          'A Coruña',
+          '2021-12-25 12:16:42',
+          'videojuegos',
+          'usado',
+          '8'
+      ),
+      (
+          'CRASH',
+          'esta bueno',
+          '27',
+          'A Coruña',
+          '2021-12-25 12:16:42',
+          'videojuegos',
+          'usado',
+          '9'
+      ),
+      (
+          'NINTENDO 64',
+          'nueva sin abrir',
+          '150',
+          'Madrid',
+          '2021-12-24 12:16:42',
+          'consolas',
+          'nuevo',
+          '7'
+      ),
+      (
+          'PINBALL',
+          'funciona perfectamente',
+          '450',
+          'Carral',
+          '2021-12-13 12:16:42',
+          'arcades',
+          'usado',
+          '6'
+      ),
+      (
+          'SNES',
+          'como nueva',
+          '105',
+          'Ferrol',
+          '2021-12-24 12:16:42',
+          'consolas',
+          'seminuevo',
+          '2'
+      ),
+      (
+          'PAC MAN ARCADE',
+          'en perfecto estado, version original',
+          '501',
+          'A Coruña',
+          '2021-12-24 12:16:42',
+          'arcades',
+          'usado',
+          '5'
+      )
+    `);
+
+    // generate 10 purchase orders
     //
     //
     //
 
-    console.log('DB with random data created');
+    console.log('DB arcade created');
   } catch (error) {
     console.log(error);
   } finally {
