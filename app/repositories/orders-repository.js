@@ -44,8 +44,36 @@ async function addOrder(purchaseOrder) {
   return created.insertId;
 }
 
+async function acceptOrder(saleData, idProduct, idUserBuyer) {
+  const pool = await getPool();
+  const now = new Date();
+  const { saleDate, saleLocation, saleMessage, saleTypeOfContact } = saleData;
+  const sql = `
+    UPDATE orders
+      SET status = 'reservado',
+        reservationDate = ?,
+        saleDate = ?,
+        saleLocation = ?,
+        saleMessage = ?,
+        saleTypeOfContact = ?
+    WHERE idProduct = ? && idUserBuyer = ?
+  `;
+  const [updated] = await pool.query(sql, [
+    now,
+    saleDate,
+    saleLocation,
+    saleMessage,
+    saleTypeOfContact,
+    idProduct,
+    idUserBuyer,
+  ]);
+
+  return updated.affectedRows === 1;
+}
+
 module.exports = {
   findAllOrdersByProductId,
   findAllOrdersByUserBuyerId,
   addOrder,
+  acceptOrder,
 };

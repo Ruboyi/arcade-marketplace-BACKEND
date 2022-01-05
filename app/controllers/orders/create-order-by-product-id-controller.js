@@ -38,6 +38,7 @@ async function createOrderByProductId(req, res) {
         throwJsonError(400, 'Ya has solicitado la compra de este producto');
       }
     }
+    // error cuando el producto ya este reservado
 
     // sending purchaseOrder notification
     const { nameUser, email } = await findUserById(productOwner);
