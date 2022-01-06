@@ -3,7 +3,11 @@
 const Joi = require('joi');
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
-const { acceptOrder, findAllOrdersByProductId } = require('../../repositories/orders-repository');
+const {
+  acceptOrder,
+  findAllOrdersByProductId,
+  discardAllOtherOrders,
+} = require('../../repositories/orders-repository');
 const { findProductByidProduct } = require('../../repositories/products-repository');
 
 const schemaId = Joi.number().integer().positive().required();
@@ -44,6 +48,9 @@ async function acceptOrderByProductId(req, res) {
     if (orderToAccept.status === 'rechazado') {
       throwJsonError(400, 'La solicitud de compra ya fue rechazada');
     }
+
+    // Al aceptar una reserva se rechazan todas las demas solicitudes de compra
+    await discardAllOtherOrders(idUserBuyer, idProduct);
 
     // --------------------------------
     // send email notification ......

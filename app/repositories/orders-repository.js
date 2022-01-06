@@ -71,9 +71,22 @@ async function acceptOrder(saleData, idProduct, idUserBuyer) {
   return updated.affectedRows === 1;
 }
 
+async function discardAllOtherOrders(idUserBuyer, idProduct) {
+  const pool = await getPool();
+  const sql = `
+  UPDATE orders
+    SET status = 'rechazado'
+    WHERE NOT idUserBuyer = ? && idProduct = ?`;
+
+  const [discarded] = await pool.query(sql, [idUserBuyer, idProduct]);
+
+  return discarded.affectedRows === 1;
+}
+
 module.exports = {
   findAllOrdersByProductId,
   findAllOrdersByUserBuyerId,
   addOrder,
   acceptOrder,
+  discardAllOtherOrders,
 };
