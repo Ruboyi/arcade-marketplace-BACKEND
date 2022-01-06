@@ -88,7 +88,7 @@
 							"variable": [
 								{
 									"key": "idUser",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -655,7 +655,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"orderSubject\": \"Compro ya\",\r\n    \"orderMessage\": \"Me encanta lo quiero ya mismo\",\r\n    \"orderTypeOfContact\": \"phone\"\r\n}",
+							"raw": "{\r\n    \"orderSubject\": \"Compro ya\",\r\n    \"orderMessage\": \"Me encanta lo quiero ya mismo\",\r\n    \"orderTypeOfContact\": \"email\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -676,6 +676,52 @@
 							"variable": [
 								{
 									"key": "idProduct",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "acceptOrderByProductId",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"saleDate\": \"2022-01-25\",\r\n    \"saleLocation\": \"Parque Europa, A Coruna\",\r\n    \"saleMessage\": \"hola hola hola\",\r\n    \"saleTypeOfContact\": \"phone\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/api/v1/orders/:idProduct/:idUserBuyer",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								":idProduct",
+								":idUserBuyer"
+							],
+							"variable": [
+								{
+									"key": "idProduct",
+									"value": "4"
+								},
+								{
+									"key": "idUserBuyer",
 									"value": "7"
 								}
 							]
