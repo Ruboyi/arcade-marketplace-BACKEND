@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const getPool = require("../infrastructure/database-infrastructure");
+const getPool = require('../infrastructure/database-infrastructure');
 
 async function findAllProducts() {
   const pool = await getPool();
@@ -23,8 +23,7 @@ async function addProduct(product) {
         idUser
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-  const { title, description, price, location, category, state, idUser } =
-    product;
+  const { title, description, price, location, category, state, idUser } = product;
   const [created] = await pool.query(sql, [
     title,
     description,
@@ -42,7 +41,7 @@ async function addProduct(product) {
 async function findProductsByUserId(idUser) {
   const pool = await getPool();
   const sql = `
-  SELECT products.*, orders.status FROM products 
+  SELECT products.*, orders.status, orders.idUserBuyer FROM products 
   LEFT JOIN orders ON products.idProduct = orders.idProduct 
   WHERE idUser = ?
   `;
@@ -52,7 +51,7 @@ async function findProductsByUserId(idUser) {
 
 async function findProductByidProduct(idProduct) {
   const pool = await getPool();
-  const sql = "SELECT * FROM products WHERE idProduct = ?";
+  const sql = 'SELECT * FROM products WHERE idProduct = ?';
   const [product] = await pool.query(sql, idProduct);
 
   return product[0];
@@ -81,7 +80,7 @@ async function updateProduct(idProduct, product) {
 }
 async function removeProductById(idProduct) {
   const pool = await getPool();
-  const sql = "DELETE FROM products WHERE idProduct = ?";
+  const sql = 'DELETE FROM products WHERE idProduct = ?';
   await pool.query(sql, idProduct);
 
   return true;

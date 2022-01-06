@@ -11,6 +11,6 @@ const router = express.Router();
 router.route('/:idProduct').all(validateAuth).get(getAllOrdersByProductId);
 router.route('/user/:idUserBuyer').all(validateAuth).get(getAllOrdersByUserBuyerId);
 router.route('/:idProduct').all(validateAuth).post(createOrderByProductId);
-router.route('/:idProduct').all(validateAuth).put(acceptOrderByProductId);
+router.route('/:idProduct/:idUserBuyer').all(validateAuth).put(acceptOrderByProductId);
 
 module.exports = router;

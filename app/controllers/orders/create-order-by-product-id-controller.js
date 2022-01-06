@@ -4,7 +4,7 @@ const Joi = require('joi');
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
 const { sendMailPurchaseOrderNotif } = require('../../helpers/mail-smtp-SendGrid');
-const { addOrder, findAllOrdersByUserBuyerId } = require('../../repositories/orders-repository');
+const { addOrder, findAllOrdersByProductId } = require('../../repositories/orders-repository');
 const { findProductByidProduct } = require('../../repositories/products-repository');
 const { findUserById } = require('../../repositories/users-repository');
 
@@ -26,22 +26,23 @@ async function createOrderByProductId(req, res) {
     if (!product) {
       throwJsonError(400, 'El producto no existe');
     }
-    const { idUser: productOwner } = product;
-    if (idUser === productOwner) {
+    const { idUser: idProductOwner } = product;
+    if (idUser === idProductOwner) {
       throwJsonError(400, 'No puedes solicitar la compra de un producto tuyo');
     }
-    const orders = await findAllOrdersByUserBuyerId(idUser);
-    const ordersForThatProduct = orders.filter((order) => order.idProduct === Number(idProduct));
+
+    const ordersForThatProduct = await findAllOrdersByProductId(idProduct);
     for (const order of ordersForThatProduct) {
-      // if status !== rechazado
-      if (order.idUserBuyer === idUser) {
+      if (order.status === ('reservado' || 'vendido')) {
+        throwJsonError(400, 'El producto ya esta reservado o vendido');
+      }
+      if (order.idUserBuyer === idUser && order.status !== 'rechazado') {
         throwJsonError(400, 'Ya has solicitado la compra de este producto');
       }
     }
-    // error cuando el producto ya este reservado
 
     // sending purchaseOrder notification
-    const { nameUser, email } = await findUserById(productOwner);
+    const { nameUser, email } = await findUserById(idProductOwner);
     await sendMailPurchaseOrderNotif(nameUser, email);
 
     const purchaseOrder = { idUserBuyer: idUser, idProduct, ...body };
