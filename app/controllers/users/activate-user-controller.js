@@ -25,6 +25,8 @@ async function validateUser(req, res) {
     await sendMailCorrectValidation(nameUser, email);
 
     res.status(200);
+    res.redirect('http://localhost:3000/login'); // DEFINIRLA EN EL .ENV
+
     res.send({ message: 'Cuenta activada.' });
   } catch (error) {
     createJsonError(error, res);
