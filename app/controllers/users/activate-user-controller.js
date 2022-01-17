@@ -5,6 +5,8 @@ const throwJsonError = require('../../errors/throw-json-error');
 const { sendMailCorrectValidation } = require('../../helpers/mail-smtp-SendGrid');
 const { activateUser, getUserByVerificationCode } = require('../../repositories/users-repository');
 
+const { FRONTEND_URL } = process.env;
+
 async function validateUser(req, res) {
   try {
     const { code } = req.query;
@@ -25,7 +27,7 @@ async function validateUser(req, res) {
     await sendMailCorrectValidation(nameUser, email);
 
     res.status(200);
-    res.redirect('http://localhost:3000/login'); // DEFINIRLA EN EL .ENV
+    res.redirect(`${FRONTEND_URL}/login`);
 
     res.send({ message: 'Cuenta activada.' });
   } catch (error) {
