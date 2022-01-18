@@ -59,7 +59,7 @@ async function activateUser(verificationCode) {
 async function getUserByVerificationCode(code) {
   const pool = await getPool();
   const sql = `
-  SELECT nameUser, email FROM users
+  SELECT nameUser, email, image, phone, createdAt FROM users
   WHERE verificationCode = ?    
   `;
   const [user] = await pool.query(sql, code);
