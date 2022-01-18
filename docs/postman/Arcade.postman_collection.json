@@ -184,7 +184,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{backendURL}}/api/v1/products/image/:idProduct",
+							"raw": "{{backendURL}}/api/v1/products/images/:idProduct",
 							"host": [
 								"{{backendURL}}"
 							],
@@ -276,7 +276,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{backendURL}}/api/v1/products/image/:idImage",
+							"raw": "{{backendURL}}/api/v1/products/images/:idImage",
 							"host": [
 								"{{backendURL}}"
 							],
