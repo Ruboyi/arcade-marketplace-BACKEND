@@ -117,6 +117,14 @@ async function removeUserById(id) {
   return true;
 }
 
+async function findFavoritesByUserId(idUser) {
+  const pool = await getPool();
+  const sql = "SELECT * FROM favorites WHERE idUser = ?";
+  const [favorites] = await pool.query(sql, idUser);
+
+  return favorites;
+}
+
 module.exports = {
   findUserById,
   createUser,
@@ -128,4 +136,5 @@ module.exports = {
   findUserProfileImage,
   uploadUserProfileImage,
   removeUserById,
+  findFavoritesByUserId,
 };
