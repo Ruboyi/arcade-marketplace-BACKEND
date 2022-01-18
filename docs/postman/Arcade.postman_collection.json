@@ -96,72 +96,6 @@
 					"response": []
 				},
 				{
-					"name": "getFavoritesByUserId",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{backendURL}}/api/v1/users/favorites/:idUser",
-							"host": [
-								"{{backendURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"favorites",
-								":idUser"
-							],
-							"variable": [
-								{
-									"key": "idUser",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteFromFavoritesByIds",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{backendURL}}/api/v1/products/favorites/:idProduct",
-							"host": [
-								"{{backendURL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"favorites",
-								":idProduct"
-							],
-							"variable": [
-								{
-									"key": "idProduct",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "updateProductById",
 					"request": {
 						"method": "PUT",
@@ -371,6 +305,65 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "getFavoritesByUserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{backendURL}}/api/v1/users/favorites",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteFromFavoritesByIds",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{backendURL}}/api/v1/products/favorites/:idProduct",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"favorites",
+								":idProduct"
+							],
+							"variable": [
+								{
+									"key": "idProduct",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -383,7 +376,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{backendURL}}/api/v1/users/:idUser",
+							"raw": "{{backendURL}}/api/v1/users/user/:idUser",
 							"host": [
 								"{{backendURL}}"
 							],
@@ -391,6 +384,7 @@
 								"api",
 								"v1",
 								"users",
+								"user",
 								":idUser"
 							],
 							"variable": [
