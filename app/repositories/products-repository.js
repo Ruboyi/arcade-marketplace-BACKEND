@@ -97,6 +97,14 @@ async function addToFavorites(idUser, idProduct) {
   return created.insertId;
 }
 
+async function removeFromFavoritesByIds(idUser, idProduct) {
+  const pool = await getPool();
+  const sql = "DELETE FROM favorites WHERE idUser = ? && idProduct = ?";
+  await pool.query(sql, [idUser, idProduct]);
+
+  return true;
+}
+
 module.exports = {
   findAllProducts,
   addProduct,
@@ -105,4 +113,5 @@ module.exports = {
   findProductByidProduct,
   removeProductById,
   addToFavorites,
+  removeFromFavoritesByIds,
 };
