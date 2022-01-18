@@ -27,7 +27,7 @@ router.route("/user/:idUser").get(getUserById);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route("/").all(validateAuth).put(updateUser);
-router.route("/favorites/:idUser").all(validateAuth).get(getFavoritesByUserId);
+router.route("/favorites").all(validateAuth).get(getFavoritesByUserId);
 router.route("/upload").all(validateAuth).post(uploadImageProfile);
 router.route("/:userId").all(validateAuth).delete(deleteUserById);
 router.route("/profile").all(validateAuth).get(getUserProfile);
