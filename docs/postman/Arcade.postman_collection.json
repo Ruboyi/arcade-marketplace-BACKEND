@@ -28,7 +28,7 @@
 					"response": []
 				},
 				{
-					"name": "uploadProductById",
+					"name": "uploadProduct",
 					"request": {
 						"method": "POST",
 						"header": [
