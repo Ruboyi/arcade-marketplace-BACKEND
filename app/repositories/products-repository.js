@@ -87,6 +87,16 @@ async function removeProductById(idProduct) {
   return true;
 }
 
+async function addToFavorites(idUser, idProduct) {
+  const pool = await getPool();
+  const sql = `INSERT
+    INTO favorites (idUser, idProduct)
+    VALUES (?, ?)`;
+  const [created] = await pool.query(sql, [idUser, idProduct]);
+
+  return created.insertId;
+}
+
 module.exports = {
   findAllProducts,
   addProduct,
@@ -94,4 +104,5 @@ module.exports = {
   updateProduct,
   findProductByidProduct,
   removeProductById,
+  addToFavorites,
 };

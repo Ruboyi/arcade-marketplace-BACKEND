@@ -2,6 +2,7 @@
 
 const express = require("express");
 
+const addToFavoritesByProductId = require("../controllers/products/add-to-favorites-by-product-idcontroller");
 const createProduct = require("../controllers/products/create-product-controller");
 const deleteImageById = require("../controllers/products/delete-image-by-id-controller");
 const deleteProductById = require("../controllers/products/delete-product-by-id-controller");
@@ -29,6 +30,7 @@ router.route("/user/:userId").all(validateAuth).get(getProductsByUserId);
 router
   .route("/:idProduct")
   .all(validateAuth)
+  .post(addToFavoritesByProductId)
   .put(updateProductById)
   .delete(deleteProductById);
 router
