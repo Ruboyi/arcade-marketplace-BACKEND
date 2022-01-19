@@ -14,7 +14,9 @@ async function initDB() {
     connection = await getPool();
     // drop and create database arcade
     await connection.query('DROP DATABASE IF EXISTS arcade');
-    await connection.query('CREATE DATABASE IF NOT EXISTS arcade DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci');
+    await connection.query(
+      'CREATE DATABASE IF NOT EXISTS arcade DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci'
+    );
     // use database arcade
     await connection.query('USE arcade');
     // delete pre-existing tables
@@ -82,20 +84,20 @@ async function initDB() {
     // create table orders
     await connection.query(`
     CREATE TABLE IF NOT EXISTS orders (
-        idOrders INT NOT NULL AUTO_INCREMENT,
+        idOrder INT NOT NULL AUTO_INCREMENT,
         idUserBuyer INT NOT NULL,
         idProduct INT NOT NULL,
         orderDate DATE NOT NULL,
         status ENUM('solicitado', 'rechazado', 'reservado', 'vendido') NOT NULL DEFAULT 'solicitado',
         orderSubject VARCHAR(120) NULL DEFAULT NULL,
         orderMessage VARCHAR(255) NULL DEFAULT NULL,
-        orderTypeOfContact ENUM('phone', 'email') NOT NULL,
-        reservationDate DATE NOT NULL,
-        saleDate DATE NOT NULL,
-        saleLocation VARCHAR(255) NOT NULL,
+        orderTypeOfContact ENUM('phone', 'email') NULL DEFAULT 'email',
+        reservationDate DATE NULL DEFAULT NULL,
+        saleDate DATE NULL DEFAULT NULL,
+        saleLocation VARCHAR(255) NULL DEFAULT NULL,
         saleMessage VARCHAR(255) NULL DEFAULT NULL,
-        saleTypeOfContact ENUM('phone', 'email') NOT NULL,
-        PRIMARY KEY (idOrders),
+        saleTypeOfContact ENUM('phone', 'email') NULL DEFAULT 'email',
+        PRIMARY KEY (idOrder),
         INDEX idUserBuyer (idUserBuyer ASC) VISIBLE,
         INDEX idProduct (idProduct ASC) VISIBLE,
         CONSTRAINT orders_ibfk_1

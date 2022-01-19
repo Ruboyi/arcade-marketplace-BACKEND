@@ -88,7 +88,7 @@
 							"variable": [
 								{
 									"key": "idUser",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -207,7 +207,7 @@
 					"response": []
 				},
 				{
-					"name": "DeleteProductById",
+					"name": "deleteProductById",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -239,7 +239,7 @@
 					"response": []
 				},
 				{
-					"name": "DeleteImageById",
+					"name": "deleteImageById",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -579,7 +579,7 @@
 					"response": []
 				},
 				{
-					"name": "DeleteUserById",
+					"name": "deleteUserById",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -688,7 +688,7 @@
 			"name": "Orders",
 			"item": [
 				{
-					"name": "getOrdersByProductId",
+					"name": "getOrdersByProductId - myProductOrders",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -746,6 +746,93 @@
 								{
 									"key": "idUserBuyer",
 									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOrderByProductId",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderSubject\": \"Compro ya\",\r\n    \"orderMessage\": \"Me encanta lo quiero ya mismo\",\r\n    \"orderTypeOfContact\": \"email\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/api/v1/orders/:idProduct",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								":idProduct"
+							],
+							"variable": [
+								{
+									"key": "idProduct",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "acceptOrderByProductId",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "string"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"saleDate\": \"2022-01-25\",\r\n    \"saleLocation\": \"Parque Europa, A Coruna\",\r\n    \"saleMessage\": \"hola hola hola\",\r\n    \"saleTypeOfContact\": \"phone\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/api/v1/orders/:idProduct/:idUserBuyer",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								":idProduct",
+								":idUserBuyer"
+							],
+							"variable": [
+								{
+									"key": "idProduct",
+									"value": "4"
+								},
+								{
+									"key": "idUserBuyer",
+									"value": "7"
 								}
 							]
 						}
