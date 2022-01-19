@@ -8,6 +8,9 @@ const {
   addToFavorites,
   findProductByidProduct,
 } = require("../../repositories/products-repository");
+const {
+  findFavoritesByUserId,
+} = require("../../repositories/users-repository");
 
 const schema = Joi.number().positive().required();
 
@@ -17,11 +20,18 @@ async function addToFavoritesByProductId(req, res) {
     const { idProduct } = req.params;
     await schema.validateAsync(idProduct);
 
-    const product = findProductByidProduct(idProduct);
+    const product = await findProductByidProduct(idProduct);
+    const productFavorite = await findFavoritesByUserId(idUser);
+
     if (!product) {
       throwJsonError(400, "Producto no existe");
     }
-
+    if (idUser === product.idUser) {
+      throwJsonError(400, "No puedes añadir tu producto a favoritos");
+    }
+    if (productFavorite.some((e) => e.idProduct == idProduct)) {
+      throwJsonError(400, "Ya tienes este producto en favoritos");
+    }
     const idFavorite = await addToFavorites(idUser, idProduct);
     res.status(201);
     res.send({ idFavorite, idUser, idProduct });
