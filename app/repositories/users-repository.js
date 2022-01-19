@@ -119,7 +119,8 @@ async function removeUserById(id) {
 
 async function findFavoritesByUserId(idUser) {
   const pool = await getPool();
-  const sql = "SELECT * FROM favorites WHERE idUser = ?";
+  const sql =
+    "SELECT * FROM products INNER JOIN favorites ON products.idProduct = favorites.idProduct WHERE favorites.idUser = ?;";
   const [favorites] = await pool.query(sql, idUser);
 
   return favorites;
