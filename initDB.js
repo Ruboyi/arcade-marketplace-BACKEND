@@ -323,7 +323,7 @@ async function initDB() {
       'supermariobros.jpg',
       'doom.jpg',
       'crash.png',
-      'nintendo64.jgp',
+      'nintendo64.jpg',
       'pinball.jpg',
       'snes.jpg',
       'pacman.jpg'
