@@ -34,7 +34,7 @@ async function validateUser(req, res) {
     res.status(200);
     res.redirect(`${FRONTEND_URL}/login`);
 
-    res.send({ message: "Cuenta activada." });
+    //res.send({ message: "Cuenta activada." });
   } catch (error) {
     createJsonError(error, res);
   }
