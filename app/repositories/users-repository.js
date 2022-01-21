@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-const getPool = require("../infrastructure/database-infrastructure");
+const getPool = require('../infrastructure/database-infrastructure');
 
 async function findUserById(userId) {
   const pool = await getPool();
-  const sql = "SELECT * FROM users WHERE idUser = ?";
+  const sql = 'SELECT * FROM users WHERE idUser = ?';
   const [user] = await pool.query(sql, userId);
   return user[0];
 }
@@ -26,7 +26,7 @@ async function createUser(user) {
     phone,
     now,
     verificationCode,
-    "user",
+    'user'
   ]);
 
   return created.insertId;
@@ -35,7 +35,7 @@ async function createUser(user) {
 async function findUserByEmail(email) {
   const pool = await getPool();
   const sql =
-    "SELECT idUser, nameUser, email, role, password, verifiedAt FROM users WHERE email = ?";
+    'SELECT idUser, nameUser, email, role, password, verifiedAt FROM users WHERE email = ?';
   const [user] = await pool.query(sql, email);
 
   return user[0];
@@ -67,14 +67,14 @@ async function getUserByVerificationCode(code) {
 }
 
 async function udpateUserById(data) {
-  const { idUser, nameUser, email, password } = data;
+  const { idUser, nameUser, email, phone, bio, password } = data;
   const pool = await getPool();
   const sql = `
     UPDATE users
-    SET nameUser = ?, email = ?, password = ?
+    SET nameUser = ?, email = ?, phone = ?, bio = ?, password = ?
     WHERE idUser = ?
   `;
-  await pool.query(sql, [nameUser, email, password, idUser]);
+  await pool.query(sql, [nameUser, email, phone, bio, password, idUser]);
 
   return true;
 }
@@ -95,7 +95,7 @@ async function addVerificationCode(idUser, code) {
 
 async function findUserProfileImage(idUser) {
   const pool = await getPool();
-  const sql = "SELECT image FROM users WHERE idUser = ?";
+  const sql = 'SELECT image FROM users WHERE idUser = ?';
   const [user] = await pool.query(sql, idUser);
 
   return user[0];
@@ -103,7 +103,7 @@ async function findUserProfileImage(idUser) {
 
 async function uploadUserProfileImage(idUser, image) {
   const pool = await getPool();
-  const sql = "UPDATE users SET image = ? WHERE idUser = ?";
+  const sql = 'UPDATE users SET image = ? WHERE idUser = ?';
   await pool.query(sql, [image, idUser]);
 
   return true;
@@ -111,7 +111,7 @@ async function uploadUserProfileImage(idUser, image) {
 
 async function removeUserById(id) {
   const pool = await getPool();
-  const sql = "DELETE FROM users WHERE idUser = ?";
+  const sql = 'DELETE FROM users WHERE idUser = ?';
   await pool.query(sql, id);
 
   return true;
@@ -120,7 +120,7 @@ async function removeUserById(id) {
 async function findFavoritesByUserId(idUser) {
   const pool = await getPool();
   const sql =
-    "SELECT * FROM products INNER JOIN favorites ON products.idProduct = favorites.idProduct WHERE favorites.idUser = ?;";
+    'SELECT * FROM products INNER JOIN favorites ON products.idProduct = favorites.idProduct WHERE favorites.idUser = ?;';
   const [favorites] = await pool.query(sql, idUser);
 
   return favorites;
@@ -137,5 +137,5 @@ module.exports = {
   findUserProfileImage,
   uploadUserProfileImage,
   removeUserById,
-  findFavoritesByUserId,
+  findFavoritesByUserId
 };

@@ -3,7 +3,12 @@
 const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 const randomstring = require('randomstring');
-const { addVerificationCode, findUserByEmail, findUserById, udpateUserById } = require('../../repositories/users-repository');
+const {
+  addVerificationCode,
+  findUserByEmail,
+  findUserById,
+  udpateUserById
+} = require('../../repositories/users-repository');
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
 const { sendMailRegister } = require('../../helpers/mail-smtp-SendGrid');
@@ -12,13 +17,14 @@ const schema = Joi.object().keys({
   nameUser: Joi.string().min(3).max(20).required(),
   email: Joi.string().email().required(),
   phone: Joi.any().optional(),
+  bio: Joi.string().min(3).max(255).optional(),
   password: Joi.string().optional(),
-  repeatPassword: Joi.string().optional(),
+  repeatPassword: Joi.string().optional()
 });
 
 const schemaPassword = Joi.object().keys({
   password: Joi.string().min(4).max(20).required(),
-  repeatPassword: Joi.ref('password'),
+  repeatPassword: Joi.ref('password')
 });
 
 async function updateUser(req, res) {
@@ -27,7 +33,8 @@ async function updateUser(req, res) {
 
     const { body } = req;
     await schema.validateAsync(body);
-    const { nameUser, email, phone, password, repeatPassword } = req.body;
+    const { nameUser, email, phone, bio, password, repeatPassword } =
+      req.body;
 
     const userById = await findUserById(idUser);
     const user = await findUserByEmail(email);
@@ -49,7 +56,8 @@ async function updateUser(req, res) {
       nameUser,
       email,
       phone,
-      password: updatedPassword,
+      bio,
+      password: updatedPassword
     });
 
     if (email !== userById.email) {
@@ -58,7 +66,7 @@ async function updateUser(req, res) {
       await sendMailRegister(nameUser, email, verificationCode);
     }
 
-    res.send({ idUser, nameUser, email, phone, role: userById.role });
+    res.send({ idUser, nameUser, email, phone, bio, role: userById.role });
   } catch (err) {
     createJsonError(err, res);
   }
