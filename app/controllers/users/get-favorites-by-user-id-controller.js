@@ -18,10 +18,10 @@ async function getFavoritesByUserId(req, res) {
     if (!user) {
       throwJsonError(400, "El usuario no existe");
     }
-    const favorites = await findFavoritesByUserId(idUser);
+    let favorites = await findFavoritesByUserId(idUser);
 
     if (favorites.length === 0) {
-      throwJsonError(400, "No hay favoritos");
+      favorites= 'Aún no tienes favoritos :(';
     }
     res.status(200);
     res.send({ data: favorites });
