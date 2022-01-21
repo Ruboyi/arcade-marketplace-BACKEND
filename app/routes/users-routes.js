@@ -1,7 +1,6 @@
 "use strict";
 
 const express = require("express");
-const { route } = require("express/lib/application");
 const validateUser = require("../controllers/users/activate-user-controller");
 const deleteUserById = require("../controllers/users/delete-user-by-id-controller");
 const getFavoritesByUserId = require("../controllers/users/get-favorites-by-user-id-controller");
