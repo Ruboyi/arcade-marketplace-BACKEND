@@ -17,10 +17,10 @@ async function getProductsByUserId(req, res) {
       throwJsonError(400, 'Acceso denegado');
     }
 
-    const products = await findProductsByUserId(userId);
+    let products = await findProductsByUserId(userId);
 
     if (products.length === 0) {
-      throwJsonError(400, 'No tienes productos');
+      products= 'Aún no tienes productos subidos :(';
     }
 
     res.status(200);
