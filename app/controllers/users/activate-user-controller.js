@@ -32,7 +32,7 @@ async function validateUser(req, res) {
     await sendMailCorrectValidation(nameUser, email);
 
     res.status(200);
-    res.redirect(`${FRONTEND_URL}/login`);
+    res.redirect(`${FRONTEND_URL}/activacion`);
 
     //res.send({ message: "Cuenta activada." });
   } catch (error) {
