@@ -1,12 +1,21 @@
 'use strict';
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
-const faker = require('faker');
 const randomstring = require('randomstring');
 const getPool = require('./app/infrastructure/database-infrastructure');
 
-// number of random users
-const users = 10;
+const usersArray = [
+  'Elsa_12367',
+  'Ruben',
+  'Aaron',
+  'Nacho',
+  'Messi',
+  'Salva',
+  'Stefano',
+  'Rick',
+  'Dani',
+  'pepe'
+];
 
 let connection;
 async function initDB() {
@@ -158,14 +167,12 @@ async function initDB() {
     `);
     console.log('DB restarted');
 
-    // generate random users
-    console.log('Creating random users...');
+    // generate 10 users - (usersArray)
+    console.log('Creating 10 users...');
 
-    for (let i = 0; i < users; i++) {
-      const name = faker.name.firstName();
-      const number = '123';
-      const domain = 'yopmail.com';
-      const email = faker.internet.email(name, number, domain);
+    for (let i = 0; i < usersArray.length; i++) {
+      let name = usersArray[i];
+      let email = `${usersArray[i]}@yopmail.com`;
       const password = '123456';
       const passwordHash = await bcrypt.hash(password, 12);
       const image = 'https://thispersondoesnotexist.com/image';
@@ -191,7 +198,8 @@ async function initDB() {
     }
 
     // generate 10 products
-    console.log('Creating products...');
+    console.log('Creating 10 products...');
+
     await connection.query(`
     INSERT INTO products(
       title,
@@ -304,6 +312,37 @@ async function initDB() {
           '5'
       )
     `);
+
+    // generate 10 product images
+    console.log('Creating 10 products images...');
+
+    const initialImages = [
+      'nintendo.jpg',
+      'gamecube.jpg',
+      'mandops1.jpg',
+      'supermariobros.jpg',
+      'doom.jpg',
+      'crash.png',
+      'nintendo64.jgp',
+      'pinball.jpg',
+      'snes.jpg',
+      'pacman.jpg'
+    ];
+
+    for (let i = 0; i < initialImages.length; i++) {
+      await connection.query(`
+      INSERT INTO productImages(
+        nameImage,
+        mainImage,
+        idProduct
+        )
+        VALUES(
+          '${initialImages[i]}',
+          1,
+          ${i + 1}          
+          )
+          `);
+    }
 
     // generate 10 purchase orders
     //
