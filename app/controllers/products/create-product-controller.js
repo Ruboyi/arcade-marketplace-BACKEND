@@ -30,7 +30,7 @@ async function createProduct(req, res) {
     res.status(201);
     res.send({
       message: `Producto ${productId} creado correctamente`,
-      productId: `${productId}`,
+      productId: productId,
     });
   } catch (error) {
     createJsonError(error, res);
