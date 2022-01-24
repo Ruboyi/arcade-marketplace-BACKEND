@@ -22,7 +22,7 @@ async function getAllProducts(req, res) {
       images.push(await findImagesByProductId(product.idProduct));
     }
 
-    const mapperProductWithIMAGES = products.map((productData, index) => {
+    const mapperProductWithImages = products.map((productData, index) => {
       const { idProduct, ...rest } = productData;
 
       return {
@@ -33,7 +33,7 @@ async function getAllProducts(req, res) {
     });
 
     res.status(200);
-    res.send({ data: mapperProductWithIMAGES });
+    res.send({ data: mapperProductWithImages });
   } catch (error) {
     createJsonError(error, res);
   }
