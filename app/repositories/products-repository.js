@@ -4,7 +4,7 @@ const getPool = require('../infrastructure/database-infrastructure');
 
 async function findAllProducts() {
   const pool = await getPool();
-  const sql = `SELECT * FROM products`;
+  const sql = `select * from products`;
   const [products] = await pool.query(sql);
   return products;
 }
@@ -23,7 +23,8 @@ async function addProduct(product) {
         idUser
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-  const { title, description, price, location, category, state, idUser } = product;
+  const { title, description, price, location, category, state, idUser } =
+    product;
   const [created] = await pool.query(sql, [
     title,
     description,
@@ -32,7 +33,7 @@ async function addProduct(product) {
     now,
     category,
     state,
-    idUser,
+    idUser
   ]);
 
   return created.insertId;
@@ -40,9 +41,13 @@ async function addProduct(product) {
 
 async function findProductsByUserId(idUser) {
   const pool = await getPool();
+  // const sql = `
+  // SELECT products.*, orders.status, orders.idUserBuyer FROM products
+  // INNER JOIN orders ON products.idProduct = orders.idProduct
+  // WHERE idUser = ?
+  // `;
   const sql = `
-  SELECT products.*, orders.status, orders.idUserBuyer FROM products 
-  LEFT JOIN orders ON products.idProduct = orders.idProduct 
+  SELECT * FROM products
   WHERE idUser = ?
   `;
   const [products] = await pool.query(sql, idUser);
@@ -73,7 +78,7 @@ async function updateProduct(idProduct, product) {
     category,
     state,
     now,
-    idProduct,
+    idProduct
   ]);
 
   return result.affectedRows === 1;
@@ -98,7 +103,7 @@ async function addToFavorites(idUser, idProduct) {
 
 async function removeFromFavoritesByIds(idUser, idProduct) {
   const pool = await getPool();
-  const sql = "DELETE FROM favorites WHERE idUser = ? && idProduct = ?";
+  const sql = 'DELETE FROM favorites WHERE idUser = ? && idProduct = ?';
   await pool.query(sql, [idUser, idProduct]);
 
   return true;
@@ -112,5 +117,5 @@ module.exports = {
   findProductByidProduct,
   removeProductById,
   addToFavorites,
-  removeFromFavoritesByIds,
+  removeFromFavoritesByIds
 };
