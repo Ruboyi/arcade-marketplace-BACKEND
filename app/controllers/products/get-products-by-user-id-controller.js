@@ -19,10 +19,6 @@ async function getProductsByUserId(req, res) {
 
     let products = await findProductsByUserId(userId);
 
-    if (products.length === 0) {
-      products= 'Aún no tienes productos subidos :(';
-    }
-
     res.status(200);
     res.send({ data: products });
   } catch (error) {

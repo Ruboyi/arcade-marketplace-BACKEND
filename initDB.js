@@ -344,6 +344,18 @@ async function initDB() {
           )
           `);
     }
+    await connection.query(`
+    INSERT INTO productImages(
+      nameImage,
+      mainImage,
+      idProduct
+      )
+      VALUES(
+        'nintendo64caja.png',
+        0,
+        1          
+        )
+        `);
 
     // generate 10 purchase orders
     //

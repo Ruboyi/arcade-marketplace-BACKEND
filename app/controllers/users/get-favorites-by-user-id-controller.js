@@ -20,9 +20,6 @@ async function getFavoritesByUserId(req, res) {
     }
     let favorites = await findFavoritesByUserId(idUser);
 
-    if (favorites.length === 0) {
-      favorites= 'Aún no tienes favoritos :(';
-    }
     res.status(200);
     res.send({ data: favorites });
   } catch (error) {
