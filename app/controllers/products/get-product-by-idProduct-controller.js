@@ -3,7 +3,12 @@
 const Joi = require('joi');
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
-const { findProductByidProduct } = require('../../repositories/products-repository');
+const {
+  findImagesByProductId
+} = require('../../repositories/product-images-repository');
+const {
+  findProductByidProduct
+} = require('../../repositories/products-repository');
 
 const schema = Joi.number().integer().positive().required();
 
@@ -17,6 +22,10 @@ async function getProductByIdProduct(req, res) {
     if (!product) {
       throwJsonError(400, 'No existe el producto');
     }
+
+    const images = await findImagesByProductId(idProduct);
+
+    product.imagesURL = images;
 
     res.status(200);
     res.send({ data: product });
