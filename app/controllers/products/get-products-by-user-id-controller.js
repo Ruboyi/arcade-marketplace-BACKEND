@@ -3,7 +3,12 @@
 const Joi = require('joi');
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
-const { findProductsByUserId } = require('../../repositories/products-repository');
+const {
+  findImagesByProductId
+} = require('../../repositories/product-images-repository');
+const {
+  findProductsByUserId
+} = require('../../repositories/products-repository');
 
 const schema = Joi.number().positive().integer().required();
 
@@ -19,8 +24,24 @@ async function getProductsByUserId(req, res) {
 
     let products = await findProductsByUserId(userId);
 
+    const images = [];
+
+    for (const product of products) {
+      images.push(await findImagesByProductId(product.idProduct));
+    }
+
+    const mapperProductWithImages = products.map((productData, index) => {
+      const { idProduct, ...rest } = productData;
+
+      return {
+        idProduct,
+        ...rest,
+        images: images[index]
+      };
+    });
+
     res.status(200);
-    res.send({ data: products });
+    res.send({ data: mapperProductWithImages });
   } catch (error) {
     createJsonError(error, res);
   }
