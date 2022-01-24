@@ -344,6 +344,7 @@ async function initDB() {
           )
           `);
     }
+
     await connection.query(`
     INSERT INTO productImages(
       nameImage,
@@ -358,11 +359,151 @@ async function initDB() {
         `);
 
     // generate 10 purchase orders
-    //
-    //
-    //
+    console.log('Creating 10 purchase orders...');
 
+    await connection.query(`
+    INSERT INTO orders(
+      idUserBuyer,
+      idProduct,
+      orderDate,
+      orderSubject,
+      orderMessage,
+      orderTypeOfContact
+    ) VALUES
+    (
+      1,
+      3,
+      '2021-12-24 12:16:42',
+      'Me gusta, lo quiero ya',
+      'Cuando podes quedar? lo quiero lo antes posible',
+      'phone'
+    ),
+    (
+      2,
+      7,
+      '2021-12-29 12:16:42',
+      'esta bueno',
+      'quiero verlo en persona',
+      'email'
+    ),
+    (
+      4,
+      10,
+      '2022-01-04 12:16:42',
+      'Te lo compro',
+      'Te lo compro pero a 20 euros',
+      'email'
+    ),
+    (
+      2,
+      8,
+      '2022-01-07 12:16:42',
+      'aguante boca',
+      'me da igual el producto, aguante boca',
+      'email'
+    ),
+    (
+      3,
+      2,
+      '2022-01-15 12:16:42',
+      'nice',
+      'me interesa, trabajo por las tardes, tu puedes quedar a la mañana?',
+      'phone'
+    ),
+    (
+      10,
+      4,
+      '2022-01-02 12:16:42',
+      'tiene buena pinta',
+      'tenes mas fotos? mandamelas al email! pepe@yopmail.com',
+      'email'
+    ),
+    (
+      1,
+      9,
+      '2021-12-29 12:16:42',
+      'lo quiero ya',
+      'Cuando podes quedar? lo quiero lo antes posible',
+      'phone'
+    ),
+    (
+      5,
+      9,
+      '2022-01-14 12:16:42',
+      'sisi',
+      'sisi, parece bueno, te doy 50 euros',
+      'email'
+    ),
+    (
+      6,
+      4,
+      '2022-01-19 12:16:42',
+      'apa, nice',
+      'te puedo pagar con pesos uruguayos?',
+      'email'
+    ),
+    (
+      9,
+      4,
+      '2022-01-21 12:16:42',
+      'ia tu sabe',
+      'cuanto me saldria el combo por el juego y un cafe juntos?',
+      'phone'
+    )
+    `);
+
+    // accepting 4 of them
+    await connection.query(`
+    UPDATE orders
+      SET status = 'reservado',
+        reservationDate = '2022-01-07 12:16:42',
+        saleDate = '2022-01-09 12:16:42',
+        saleLocation = 'plaza pontevedra, a coruña',
+        saleMessage = 'lleva el dinero justo y no perdamos el tiempo',
+        saleTypeOfContact = 'phone'
+    WHERE idProduct = 3 && idUserBuyer = 1
+    `);
+    await connection.query(`
+    UPDATE orders
+      SET status = 'reservado',
+        reservationDate = '2022-01-20 12:16:42',
+        saleDate = '2022-02-24 12:16:42',
+        saleLocation = 'plaza de vigo, a coruña',
+        saleMessage = 'llego una chaqueta azul para que me reconozcas',
+        saleTypeOfContact = 'email'
+    WHERE idProduct = 2 && idUserBuyer = 3
+    `);
+    await connection.query(`
+    UPDATE orders
+      SET status = 'reservado',
+        reservationDate = '2022-01-25 12:16:42',
+        saleDate = '2022-02-17 12:16:42',
+        saleLocation = 'en lo de tu abuela',
+        saleMessage = 'cuando estes llegando avisame y te abro la puerta',
+        saleTypeOfContact = 'phone'
+    WHERE idProduct = 10 && idUserBuyer = 4
+    `);
+    await connection.query(`
+    UPDATE orders
+      SET status = 'reservado',
+        reservationDate = '2022-01-20 12:16:42',
+        saleDate = '2022-01-25 12:16:42',
+        saleLocation = 'atocha, madrid',
+        saleMessage = 'frente al cafe ese, llega puntual',
+        saleTypeOfContact = 'phone'
+    WHERE idProduct = 8 && idUserBuyer = 2
+    `);
+
+    // rejecting 1 of them
+    await connection.query(`
+    UPDATE orders
+      SET status = 'rechazado'
+    WHERE idProduct = 7 && idUserBuyer = 2
+    `);
+
+    // ---------------------------------------------------------
     console.log('DB arcade created');
+    // ---------------------------------------------------------
   } catch (error) {
     console.log(error);
   } finally {
