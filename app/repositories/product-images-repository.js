@@ -2,6 +2,8 @@
 
 const getPool = require('../infrastructure/database-infrastructure');
 
+const { HTTP_SERVER, PATH_PRODUCTS_IMAGE } = process.env;
+
 async function addImageByProductId(idProduct, nameImage, mainImage = 0) {
   const pool = await getPool();
   const now = new Date();
@@ -9,7 +11,11 @@ async function addImageByProductId(idProduct, nameImage, mainImage = 0) {
         nameImage,
         mainImage,
         idProduct) VALUES ( ?, ?, ?)`;
-  const [products] = await pool.query(sql, [nameImage, mainImage ? 1 : 0, idProduct]);
+  const [products] = await pool.query(sql, [
+    nameImage,
+    mainImage ? 1 : 0,
+    idProduct
+  ]);
 
   return true;
 }
@@ -31,7 +37,15 @@ async function findImagesByProductId(idProduct) {
   const sql = `SELECT * FROM productImages WHERE idProduct = ?`;
   const [images] = await pool.query(sql, idProduct);
 
-  return images;
+  const imagesURL = [];
+
+  for (let i = 0; i < images.length; i++) {
+    const { nameImage } = images[i];
+    const imgURL = `${HTTP_SERVER}/${PATH_PRODUCTS_IMAGE}/${idProduct}/${nameImage}`;
+    imagesURL.push(imgURL);
+  }
+
+  return imagesURL;
 }
 
 async function findImageByImageId(idImage) {
@@ -55,5 +69,5 @@ module.exports = {
   removeMainImageByidProduct,
   findImagesByProductId,
   findImageByImageId,
-  removeImageById,
+  removeImageById
 };

@@ -9,8 +9,6 @@ const {
   findAllProducts
 } = require('../../repositories/products-repository');
 
-const { HTTP_SERVER, PATH_PRODUCTS_IMAGE } = process.env;
-
 async function getAllProducts(req, res) {
   try {
     const products = await findAllProducts();
@@ -26,13 +24,11 @@ async function getAllProducts(req, res) {
 
     const mapperProductWithIMAGES = products.map((productData, index) => {
       const { idProduct, ...rest } = productData;
-      const { nameImage } = images[index][0]; // TODO - AÑADIR FUNCION PARA QUE RECOJA LA MAIN IMAGE
-      const imgURL = `${HTTP_SERVER}/${PATH_PRODUCTS_IMAGE}/${idProduct}/${nameImage}`;
 
       return {
         idProduct,
         ...rest,
-        image: imgURL
+        images: images[index]
       };
     });
 
