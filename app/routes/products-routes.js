@@ -12,6 +12,7 @@ const getImagesByProductId = require("../controllers/products/get-images-by-prod
 const getProductByIdProduct = require("../controllers/products/get-product-by-idProduct-controller");
 const getProductsByUserId = require("../controllers/products/get-products-by-user-id-controller");
 const updateProductById = require("../controllers/products/update-product-by-id-controller");
+const updateTimesVisitedById = require("../controllers/products/update-times-visited-controller");
 const uploadProductImageById = require("../controllers/products/upload-product-image-by-id-controller");
 const validateAuth = require("../middlewares/validate-auth");
 const router = express.Router();
@@ -23,6 +24,7 @@ const router = express.Router();
 
 router.route("/").get(getAllProducts);
 router.route("/:idProduct").get(getProductByIdProduct);
+router.route('/times-visited/:idProduct').put(updateTimesVisitedById)
 router.route("/images/:idProduct").get(getImagesByProductId);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante):
 

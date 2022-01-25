@@ -83,6 +83,7 @@ async function updateProduct(idProduct, product) {
 
   return result.affectedRows === 1;
 }
+
 async function removeProductById(idProduct) {
   const pool = await getPool();
   const sql = 'DELETE FROM products WHERE idProduct = ?';
@@ -109,6 +110,19 @@ async function removeFromFavoritesByIds(idUser, idProduct) {
   return true;
 }
 
+async function updateTimesVisited(idProduct, timesVisited) {
+
+  const pool = await getPool();
+  const sql = `
+    UPDATE products SET timesVisited= ? WHERE idProduct = ?`;
+  const [result] = await pool.query(sql, [
+    timesVisited,
+    idProduct
+  ]);
+
+  return result.affectedRows === 1;
+}
+
 module.exports = {
   findAllProducts,
   addProduct,
@@ -117,5 +131,6 @@ module.exports = {
   findProductByidProduct,
   removeProductById,
   addToFavorites,
-  removeFromFavoritesByIds
+  removeFromFavoritesByIds,
+  updateTimesVisited
 };
