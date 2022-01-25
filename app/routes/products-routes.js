@@ -9,6 +9,7 @@ const deleteImageById = require("../controllers/products/delete-image-by-id-cont
 const deleteProductById = require("../controllers/products/delete-product-by-id-controller");
 const getAllProducts = require("../controllers/products/get-all-products-controller");
 const getImagesByProductId = require("../controllers/products/get-images-by-product-id-controller");
+const getNumberOfFavs = require("../controllers/products/get-number-of-favs-controller")
 const getProductByIdProduct = require("../controllers/products/get-product-by-idProduct-controller");
 const getProductsByUserId = require("../controllers/products/get-products-by-user-id-controller");
 const updateProductById = require("../controllers/products/update-product-by-id-controller");
@@ -24,8 +25,10 @@ const router = express.Router();
 
 router.route("/").get(getAllProducts);
 router.route("/:idProduct").get(getProductByIdProduct);
-router.route('/times-visited/:idProduct').put(updateTimesVisitedById)
+router.route("/favorites/:idProduct").get(getNumberOfFavs);
+router.route("/times-visited/:idProduct").put(updateTimesVisitedById);
 router.route("/images/:idProduct").get(getImagesByProductId);
+
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante):
 
 router.route("/").all(validateAuth).post(createProduct);

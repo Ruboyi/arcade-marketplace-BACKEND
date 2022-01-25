@@ -123,6 +123,14 @@ async function updateTimesVisited(idProduct, timesVisited) {
   return result.affectedRows === 1;
 }
 
+async function countNumberOfFavs(idProduct) {
+  const pool = await getPool()
+  const sql = `SELECT COUNT(*) as numberOfFavs from favorites where idProduct = ?`
+  const [result] = await pool.query(sql, [idProduct])
+
+  return result
+}
+
 module.exports = {
   findAllProducts,
   addProduct,
@@ -132,5 +140,6 @@ module.exports = {
   removeProductById,
   addToFavorites,
   removeFromFavoritesByIds,
-  updateTimesVisited
+  updateTimesVisited,
+  countNumberOfFavs
 };
