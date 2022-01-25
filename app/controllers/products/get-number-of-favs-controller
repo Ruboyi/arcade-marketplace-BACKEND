@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const createJsonError = require('../../errors/create-json-error');
-//const throwJsonError = require('../../errors/throw-json-error');
+const throwJsonError = require('../../errors/throw-json-error');
 const { countNumberOfFavs } = require('../../repositories/products-repository');
 
 const schema = Joi.number().integer().positive().required();
@@ -13,10 +13,9 @@ async function getNumberOfFavs(req, res) {
         await schema.validateAsync(idProduct);
 
         const responseNumberOfFavs = await countNumberOfFavs(idProduct);
-        const numberOfFavs = responseNumberOfFavs.data.data[0].numberOfFavs
 
         res.status(200);
-        res.send(numberOfFavs);
+        res.send(responseNumberOfFavs);
     } catch (error) {
         createJsonError(error, res);
     }
