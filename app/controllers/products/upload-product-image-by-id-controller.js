@@ -1,11 +1,16 @@
-'use strict';
+"use strict";
 
-const Joi = require('joi');
-const createJsonError = require('../../errors/create-json-error');
-const throwJsonError = require('../../errors/throw-json-error');
-const uploadImage = require('../../helpers/upload-image');
-const { removeMainImageByidProduct, addImageByProductId } = require('../../repositories/product-images-repository');
-const { findProductByidProduct } = require('../../repositories/products-repository');
+const Joi = require("joi");
+const createJsonError = require("../../errors/create-json-error");
+const throwJsonError = require("../../errors/throw-json-error");
+const uploadImage = require("../../helpers/upload-image");
+const {
+  removeMainImageByidProduct,
+  addImageByProductId,
+} = require("../../repositories/product-images-repository");
+const {
+  findProductByidProduct,
+} = require("../../repositories/products-repository");
 
 const { HTTP_SERVER, PATH_PRODUCTS_IMAGE } = process.env;
 
@@ -22,12 +27,12 @@ async function uploadProductImageById(req, res) {
     const product = await findProductByidProduct(idProduct);
 
     if (!product) {
-      throwJsonError(400, 'No existe el producto');
+      throwJsonError(400, "No existe el producto");
     }
 
     const { idUser: userId } = product;
     if (idUser !== Number(userId)) {
-      throwJsonError(400, 'Acceso denegado');
+      throwJsonError(400, "Acceso denegado");
     }
 
     const { body } = req;
@@ -36,22 +41,23 @@ async function uploadProductImageById(req, res) {
 
     const { files } = req;
     if (!files || Object.keys(files).length === 0) {
-      throwJsonError(400, 'No se ha seleccionado ningún fichero');
+      throwJsonError(400, "No se ha seleccionado ningún fichero");
     }
 
     const { productImage } = files;
 
     if (!productImage) {
-      throwJsonError(400, 'Fichero subido no válido');
-    }
-    if (!productImage.mimetype.startsWith('image')) {
-      throwJsonError(400, 'Formato no valido');
+      throwJsonError(400, "Fichero subido no válido");
     }
 
     //! Logica que creo que podria funcionar!
+    const isProductImageArray = Array.isArray(productImage);
 
-    /* if (productImage.isArray()) {
+    if (isProductImageArray) {
       for (const product of productImage) {
+        if (!product.mimetype.startsWith("image")) {
+          throwJsonError(400, "Formato no valido");
+        }
         const processImage = await uploadImage({
           imageData: product.data,
           destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
@@ -65,6 +71,9 @@ async function uploadProductImageById(req, res) {
         await addImageByProductId(idProduct, processImage, mainImage);
       }
     } else {
+      if (!productImage.mimetype.startsWith("image")) {
+        throwJsonError(400, "Formato no valido");
+      }
       const processImage = await uploadImage({
         imageData: productImage.data,
         destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
@@ -76,24 +85,22 @@ async function uploadProductImageById(req, res) {
         await removeMainImageByidProduct(idProduct);
       }
       await addImageByProductId(idProduct, processImage, mainImage);
-    } */
+    }
 
     //! Sobraría desde aquí
-    const processImage = await uploadImage({
-      imageData: productImage.data,
-      destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
-      width: 600,
-      height: 600,
-      codImage: idProduct,
-    });
-    if (mainImage) {
-      await removeMainImageByidProduct(idProduct);
-    }
-    await addImageByProductId(idProduct, processImage, mainImage);
-    //!Hasta aquí
+    // const processImage = await uploadImage({
+    //   imageData: productImage.data,
+    //   destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
+    //   width: 600,
+    //   height: 600,
+    //   codImage: idProduct,
+    // });
+    // if (mainImage) {
+    //   await removeMainImageByidProduct(idProduct);
+    // //!Hasta aquí
 
     res.status(201);
-    res.send(files);
+    res.send({ message: "imagen o imagenes subidas correctamente" });
   } catch (error) {
     createJsonError(error, res);
   }
