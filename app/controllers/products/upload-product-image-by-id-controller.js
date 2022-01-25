@@ -40,12 +40,45 @@ async function uploadProductImageById(req, res) {
     }
 
     const { productImage } = files;
+
     if (!productImage) {
       throwJsonError(400, 'Fichero subido no válido');
     }
     if (!productImage.mimetype.startsWith('image')) {
       throwJsonError(400, 'Formato no valido');
     }
+
+    //! Logica que creo que podria funcionar!
+
+    /* if (productImage.isArray()) {
+      for (const product of productImage) {
+        const processImage = await uploadImage({
+          imageData: product.data,
+          destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
+          width: 600,
+          height: 600,
+          codImage: idProduct,
+        });
+        if (mainImage) {
+          await removeMainImageByidProduct(idProduct);
+        }
+        await addImageByProductId(idProduct, processImage, mainImage);
+      }
+    } else {
+      const processImage = await uploadImage({
+        imageData: productImage.data,
+        destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
+        width: 600,
+        height: 600,
+        codImage: idProduct,
+      });
+      if (mainImage) {
+        await removeMainImageByidProduct(idProduct);
+      }
+      await addImageByProductId(idProduct, processImage, mainImage);
+    } */
+
+    //! Sobraría desde aquí
     const processImage = await uploadImage({
       imageData: productImage.data,
       destination: `${PATH_PRODUCTS_IMAGE}/${idProduct}`,
@@ -57,8 +90,10 @@ async function uploadProductImageById(req, res) {
       await removeMainImageByidProduct(idProduct);
     }
     await addImageByProductId(idProduct, processImage, mainImage);
+    //!Hasta aquí
+
     res.status(201);
-    res.send({ image: `${HTTP_SERVER}/${PATH_PRODUCTS_IMAGE}/${idProduct}/${processImage}` });
+    res.send(files);
   } catch (error) {
     createJsonError(error, res);
   }
