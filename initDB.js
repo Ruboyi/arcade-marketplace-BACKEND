@@ -1,20 +1,20 @@
-'use strict';
-require('dotenv').config();
-const bcrypt = require('bcryptjs');
-const randomstring = require('randomstring');
-const getPool = require('./app/infrastructure/database-infrastructure');
+"use strict";
+require("dotenv").config();
+const bcrypt = require("bcryptjs");
+const randomstring = require("randomstring");
+const getPool = require("./app/infrastructure/database-infrastructure");
 
 const usersArray = [
-  'Elsa_12367',
-  'Ruben',
-  'Aaron',
-  'Nacho',
-  'Messi',
-  'Salva',
-  'Stefano',
-  'Rick',
-  'Dani',
-  'pepe'
+  "Elsa_12367",
+  "Ruben",
+  "Aaron",
+  "Nacho",
+  "Messi",
+  "Salva",
+  "Stefano",
+  "Rick",
+  "Dani",
+  "pepe",
 ];
 
 let connection;
@@ -22,20 +22,20 @@ async function initDB() {
   try {
     connection = await getPool();
     // drop and create database arcade
-    await connection.query('DROP DATABASE IF EXISTS arcade');
+    await connection.query("DROP DATABASE IF EXISTS arcade");
     await connection.query(
-      'CREATE DATABASE IF NOT EXISTS arcade DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci'
+      "CREATE DATABASE IF NOT EXISTS arcade DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci"
     );
     // use database arcade
-    await connection.query('USE arcade');
+    await connection.query("USE arcade");
     // delete pre-existing tables
-    await connection.query('DROP TABLE IF EXISTS favorites');
-    await connection.query('DROP TABLE IF EXISTS orders');
-    await connection.query('DROP TABLE IF EXISTS productReports');
-    await connection.query('DROP TABLE IF EXISTS productImages');
-    await connection.query('DROP TABLE IF EXISTS products');
-    await connection.query('DROP TABLE IF EXISTS reviews');
-    await connection.query('DROP TABLE IF EXISTS users');
+    await connection.query("DROP TABLE IF EXISTS favorites");
+    await connection.query("DROP TABLE IF EXISTS orders");
+    await connection.query("DROP TABLE IF EXISTS productReports");
+    await connection.query("DROP TABLE IF EXISTS productImages");
+    await connection.query("DROP TABLE IF EXISTS products");
+    await connection.query("DROP TABLE IF EXISTS reviews");
+    await connection.query("DROP TABLE IF EXISTS users");
 
     // create table users
     await connection.query(`
@@ -115,7 +115,9 @@ async function initDB() {
           REFERENCES arcade.users (idUser),
         CONSTRAINT orders_ibfk_2
           FOREIGN KEY (idProduct)
-          REFERENCES arcade.products (idProduct))
+          REFERENCES arcade.products (idProduct),
+          CONSTRAINT orders_ibfk_1 FOREIGN KEY (idUserBuyer) REFERENCES users (idUser)
+          ON DELETE CASCADE )
     `);
     // create table productImages
     await connection.query(`
@@ -166,20 +168,20 @@ async function initDB() {
           FOREIGN KEY (idUser)
           REFERENCES arcade.users (idUser))
     `);
-    console.log('DB restarted');
+    console.log("DB restarted");
 
     // generate 10 users - (usersArray)
-    console.log('Creating 10 users...');
+    console.log("Creating 10 users...");
 
     for (let i = 0; i < usersArray.length; i++) {
       let name = usersArray[i];
       let email = `${usersArray[i]}@yopmail.com`;
-      const password = '123456';
+      const password = "123456";
       const passwordHash = await bcrypt.hash(password, 12);
-      const image = 'https://thispersondoesnotexist.com/image';
+      const image = "https://thispersondoesnotexist.com/image";
 
       const now = new Date().toISOString();
-      const mySQLDateString = now.slice(0, 19).replace('T', ' ');
+      const mySQLDateString = now.slice(0, 19).replace("T", " ");
       const verificationCode = randomstring.generate(64);
 
       // insert user
@@ -199,7 +201,7 @@ async function initDB() {
     }
 
     // generate 10 products
-    console.log('Creating 10 products...');
+    console.log("Creating 10 products...");
 
     await connection.query(`
     INSERT INTO products(
@@ -315,19 +317,19 @@ async function initDB() {
     `);
 
     // generate 10 product images
-    console.log('Creating 10 products images...');
+    console.log("Creating 10 products images...");
 
     const initialImages = [
-      'nintendo.jpg',
-      'gamecube.jpg',
-      'mandops1.jpg',
-      'supermariobros.jpg',
-      'doom.jpg',
-      'crash.png',
-      'nintendo64.jpg',
-      'pinball.jpg',
-      'snes.jpg',
-      'pacman.jpg'
+      "nintendo.jpg",
+      "gamecube.jpg",
+      "mandops1.jpg",
+      "supermariobros.jpg",
+      "doom.jpg",
+      "crash.png",
+      "nintendo64.jpg",
+      "pinball.jpg",
+      "snes.jpg",
+      "pacman.jpg",
     ];
 
     for (let i = 0; i < initialImages.length; i++) {
@@ -359,7 +361,7 @@ async function initDB() {
         `);
 
     // generate 10 purchase orders
-    console.log('Creating 10 purchase orders...');
+    console.log("Creating 10 purchase orders...");
 
     await connection.query(`
     INSERT INTO orders(
@@ -502,7 +504,7 @@ async function initDB() {
     `);
 
     // ---------------------------------------------------------
-    console.log('DB arcade created');
+    console.log("DB arcade created");
     // ---------------------------------------------------------
   } catch (error) {
     console.log(error);
