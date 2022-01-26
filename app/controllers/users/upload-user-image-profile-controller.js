@@ -39,13 +39,13 @@ async function uploadImageProfile(req, res) {
 
     const imageName = `${idUser}-${random}${extension}`;
     const pathImage = `${pathProfileImageFolder}/${imageName}`;
+    const url = `${HTTP_SERVER}/${PATH_USER_IMAGE}/${imageName}`;
 
     profileImage.mv(pathImage, async function (err) {
       if (err) return res.status(500).send(err);
-      await uploadUserProfileImage(idUser, imageName);
-
-      res.send({ url: `${HTTP_SERVER}/${PATH_USER_IMAGE}/${imageName}` });
+      await uploadUserProfileImage(idUser, url);
     });
+    res.send({ url: url });
   } catch (error) {
     createJsonError(error, res);
   }
