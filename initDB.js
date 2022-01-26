@@ -112,12 +112,10 @@ async function initDB() {
         INDEX idProduct (idProduct ASC) VISIBLE,
         CONSTRAINT orders_ibfk_1
           FOREIGN KEY (idUserBuyer)
-          REFERENCES arcade.users (idUser),
+          REFERENCES arcade.users (idUser) ON DELETE CASCADE,
         CONSTRAINT orders_ibfk_2
           FOREIGN KEY (idProduct)
-          REFERENCES arcade.products (idProduct),
-          CONSTRAINT orders_ibfk_1 FOREIGN KEY (idUserBuyer) REFERENCES users (idUser)
-          ON DELETE CASCADE )
+          REFERENCES arcade.products (idProduct))
     `);
     // create table productImages
     await connection.query(`
