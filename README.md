@@ -23,13 +23,13 @@ https://miro.com/app/board/uXjVOe1R7fg=/?invite_link_id=49270183990
 
 2.  En la terminal integrada ejecutar: **_npm install_** . Se instalarán todos los paquetes de npm.
 
-3.  Copiamos el **_template.env_**. En la terminal:
+3.  En la terminal integrada ejecutar: **_node initDB.js_** . Se inicializará la DataBase con usuarios, productos y solicitudes de compra.
+
+4.  Copiamos el **_template.env_**. En la terminal:
 
     > cp template.env .env
 
-4.  Rellenamos manualmente el **_.env_**.
-
-5.  En la terminal integrada ejecutar: **_node initDB.js_** . Se inicializará la DataBase con usuarios, productos y solicitudes de compra.
+5.  Rellenamos manualmente el **_.env_**.
 
 6.  Para iniciar el nodemon ejecutar en la terminal integrada: **_npm run dev_**.
 
