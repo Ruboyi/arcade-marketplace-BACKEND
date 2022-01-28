@@ -38,7 +38,7 @@ async function addOrder(purchaseOrder) {
     now,
     orderSubject,
     orderMessage,
-    orderTypeOfContact,
+    orderTypeOfContact
   ]);
 
   return created.insertId;
@@ -65,7 +65,7 @@ async function acceptOrder(saleData, idProduct, idUserBuyer) {
     saleMessage,
     saleTypeOfContact,
     idProduct,
-    idUserBuyer,
+    idUserBuyer
   ]);
 
   return updated.affectedRows === 1;
@@ -83,10 +83,19 @@ async function discardAllOtherOrders(idUserBuyer, idProduct) {
   return discarded.affectedRows === 1;
 }
 
+async function findOrderById(idOrder) {
+  const pool = await getPool();
+  const sql = `SELECT * FROM orders WHERE idOrder = ?`;
+  const [order] = await pool.query(sql, idOrder);
+
+  return order[0];
+}
+
 module.exports = {
   findAllOrdersByProductId,
   findAllOrdersByUserBuyerId,
   addOrder,
   acceptOrder,
   discardAllOtherOrders,
+  findOrderById
 };
