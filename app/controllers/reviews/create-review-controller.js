@@ -18,14 +18,18 @@ async function createReviewForIdUser(req, res) {
   try {
     const { body } = req;
     const { idUser: idUserReviewer } = req.auth;
-    console.log(idUserReviewer);
     const { idUser } = req.params;
     const user = await findUserById(idUser);
     if (!user) {
       throwJsonError(400, "El usuario no existe");
     }
+
     const { opinion, rating, isSeller } = body;
+
+    console.log(body);
+
     const review = { opinion, rating, isSeller, idUserReviewer, idUser };
+
     await schema.validateAsync(review);
     const idReview = await addReview(review);
     res.status(200);
