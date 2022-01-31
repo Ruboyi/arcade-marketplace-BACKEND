@@ -1,14 +1,17 @@
-'use strict';
+"use strict";
 
-const Joi = require('joi');
-const createJsonError = require('../../errors/create-json-error');
-const throwJsonError = require('../../errors/throw-json-error');
+const Joi = require("joi");
+const createJsonError = require("../../errors/create-json-error");
+const throwJsonError = require("../../errors/throw-json-error");
 const {
-  findImagesByProductId
-} = require('../../repositories/product-images-repository');
+  findOrderStatusByProductId,
+} = require("../../repositories/orders-repository");
 const {
-  findProductByidProduct
-} = require('../../repositories/products-repository');
+  findImagesByProductId,
+} = require("../../repositories/product-images-repository");
+const {
+  findProductByidProduct,
+} = require("../../repositories/products-repository");
 
 const schema = Joi.number().integer().positive().required();
 
@@ -20,8 +23,16 @@ async function getProductByIdProduct(req, res) {
     const product = await findProductByidProduct(idProduct);
 
     if (!product) {
-      throwJsonError(400, 'No existe el producto');
+      throwJsonError(400, "No existe el producto");
     }
+
+    const status = await findOrderStatusByProductId(idProduct);
+
+    if (status && status.status === "reservado") {
+      product.status = "reservado";
+    }
+
+    console.log(status);
 
     const images = await findImagesByProductId(idProduct);
 

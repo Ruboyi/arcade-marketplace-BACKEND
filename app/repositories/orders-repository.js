@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const getPool = require('../infrastructure/database-infrastructure');
+const getPool = require("../infrastructure/database-infrastructure");
 
 async function findAllOrdersByProductId(idProduct) {
   const pool = await getPool();
-  const sql = 'SELECT * FROM orders WHERE idProduct = ?';
+  const sql = "SELECT * FROM orders WHERE idProduct = ?";
   const [orders] = await pool.query(sql, idProduct);
 
   return orders;
@@ -12,7 +12,7 @@ async function findAllOrdersByProductId(idProduct) {
 
 async function findAllOrdersByUserBuyerId(idUserBuyer) {
   const pool = await getPool();
-  const sql = 'SELECT * FROM orders WHERE idUserBuyer = ?';
+  const sql = "SELECT * FROM orders WHERE idUserBuyer = ?";
   const [orders] = await pool.query(sql, idUserBuyer);
 
   return orders;
@@ -21,7 +21,13 @@ async function findAllOrdersByUserBuyerId(idUserBuyer) {
 async function addOrder(purchaseOrder) {
   const pool = await getPool();
   const now = new Date();
-  const { idUserBuyer, idProduct, orderSubject, orderMessage, orderTypeOfContact } = purchaseOrder;
+  const {
+    idUserBuyer,
+    idProduct,
+    orderSubject,
+    orderMessage,
+    orderTypeOfContact,
+  } = purchaseOrder;
   const sql = `INSERT INTO orders(
       idUserBuyer,
       idProduct,
@@ -38,7 +44,7 @@ async function addOrder(purchaseOrder) {
     now,
     orderSubject,
     orderMessage,
-    orderTypeOfContact
+    orderTypeOfContact,
   ]);
 
   return created.insertId;
@@ -65,7 +71,7 @@ async function acceptOrder(saleData, idProduct, idUserBuyer) {
     saleMessage,
     saleTypeOfContact,
     idProduct,
-    idUserBuyer
+    idUserBuyer,
   ]);
 
   return updated.affectedRows === 1;
@@ -91,11 +97,21 @@ async function findOrderById(idOrder) {
   return order[0];
 }
 
+async function findOrderStatusByProductId(idProduct) {
+  const pool = await getPool();
+  const sql =
+    "SELECT status FROM orders WHERE idProduct = ? AND status = 'reservado'";
+  const [status] = await pool.query(sql, idProduct);
+
+  return status[0];
+}
+
 module.exports = {
   findAllOrdersByProductId,
   findAllOrdersByUserBuyerId,
   addOrder,
   acceptOrder,
   discardAllOtherOrders,
-  findOrderById
+  findOrderById,
+  findOrderStatusByProductId,
 };
