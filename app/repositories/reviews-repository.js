@@ -9,6 +9,13 @@ async function findAllUserReviewsById(idUser) {
   return reviews;
 }
 
+async function getAvgRatingById(idUser) {
+  const pool = await getPool();
+  const sql = `SELECT AVG(rating) as avgRating FROM reviews WHERE idUser = ?;`;
+  const [reviews] = await pool.query(sql, idUser);
+  return reviews;
+}
+
 async function addReview(review) {
   const pool = await getPool();
   const now = new Date();
@@ -30,5 +37,6 @@ async function addReview(review) {
 
 module.exports = {
   findAllUserReviewsById,
+  getAvgRatingById,
   addReview,
 };
