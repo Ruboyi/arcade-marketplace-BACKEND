@@ -393,16 +393,6 @@ async function initDB() {
         '9'
       ),
       (
-        'GTA2 PS one',
-        'Donde empezo todo del mundo gta, horas y horas de diviersión me ha dado este clasico',
-        '25',
-        'A Coruña',
-        '2021-12-24 12:16:42',
-        'videojuegos',
-        'seminuevo',
-        '9'
-      ),
-      (
         'SUPER Mario 64',
         'Primer juego de mario en 3D, si te gusta el mundo de super mario deberias probar sus origenes',
         '10',
