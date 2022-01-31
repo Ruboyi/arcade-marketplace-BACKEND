@@ -4,7 +4,7 @@ const getPool = require("../infrastructure/database-infrastructure");
 
 async function findAllUserReviewsById(idUser) {
   const pool = await getPool();
-  const sql = `SELECT * FROM reviews WHERE idUser = ?`;
+  const sql = `SELECT idReview, opinion, rating, isSeller, idUserReviewer, reviews.idUser, nameUser, email, image FROM reviews INNER JOIN users ON reviews.idUserReviewer = users.idUser WHERE reviews.idUser = ?`;
   const [reviews] = await pool.query(sql, idUser);
   return reviews;
 }
