@@ -32,8 +32,6 @@ async function getProductByIdProduct(req, res) {
       product.status = "reservado";
     }
 
-    console.log(status);
-
     const images = await findImagesByProductId(idProduct);
 
     product.imagesURL = images;
