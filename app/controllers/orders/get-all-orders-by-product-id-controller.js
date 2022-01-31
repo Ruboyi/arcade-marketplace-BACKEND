@@ -23,9 +23,7 @@ async function getAllOrdersByProductId(req, res) {
     }
 
     const orders = await findAllOrdersByProductId(idProduct);
-    if (orders.length === 0) {
-      throwJsonError(400, 'No hay ordenes de compra');
-    }
+
     res.status(200);
     res.send({ data: orders });
   } catch (error) {
