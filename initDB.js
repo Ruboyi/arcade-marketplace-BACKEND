@@ -311,7 +311,38 @@ async function initDB() {
           'arcades',
           'usado',
           '5'
+      ),
+      (
+        'GAME BOY',
+        'Como nueva incluidos 2 juegos',
+        '60',
+        'A Coruña',
+        '2021-12-24 12:16:42',
+        'consolas',
+        'usado',
+        '2'
+      ),
+      (
+        'PS2',
+        'Un poco arañada en un filo pero funciona perfectamente',
+        '80',
+        'A Coruña',
+        '2021-12-24 12:16:42',
+        'consolas',
+        'usado',
+        '3'
+      ),
+      (
+        'POKEMON CRYSTAL GBcolor',
+        'Un clasico de los pokemos en mi opinion el mejor',
+        '15',
+        'A Coruña',
+        '2021-12-24 12:16:42',
+        'videojuegos',
+        'usado',
+        '4'
       )
+      
     `);
 
     // generate 10 product images
@@ -328,6 +359,9 @@ async function initDB() {
       "pinball.jpg",
       "snes.jpg",
       "pacman.jpg",
+      "gameboy.jpg",
+      "ps2.jpeg",
+      "pokemoncrystal.jpg",
     ];
 
     for (let i = 0; i < initialImages.length; i++) {
