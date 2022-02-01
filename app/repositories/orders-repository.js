@@ -106,6 +106,15 @@ async function findOrderStatusByProductId(idProduct) {
   return status[0];
 }
 
+async function findAllOrdersByIdUser(idUser) {
+  const pool = await getPool();
+  const sql =
+    "Select * FROM orders INNER JOIN products ON orders.idProduct = products.idProduct INNER JOIN users ON users.idUser = products.idUser WHERE users.idUser = ?;";
+  const [orders] = await pool.query(sql, idUser);
+
+  return orders;
+}
+
 module.exports = {
   findAllOrdersByProductId,
   findAllOrdersByUserBuyerId,
@@ -114,4 +123,5 @@ module.exports = {
   discardAllOtherOrders,
   findOrderById,
   findOrderStatusByProductId,
+  findAllOrdersByIdUser,
 };
