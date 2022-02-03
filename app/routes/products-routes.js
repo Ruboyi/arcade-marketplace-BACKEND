@@ -7,7 +7,9 @@ const createProduct = require("../controllers/products/create-product-controller
 const deleteFromFavoritesByIds = require("../controllers/products/delete-from-favorites-by-ids");
 const deleteImageById = require("../controllers/products/delete-image-by-id-controller");
 const deleteProductById = require("../controllers/products/delete-product-by-id-controller");
+const getAllNewProducts = require("../controllers/products/get-all-new-products-controller");
 const getAllProducts = require("../controllers/products/get-all-products-controller");
+const getAllProductsOrderedByTimesVisited = require("../controllers/products/get-all-products-ordered-by-timesVisited-controller");
 const getImagesByProductId = require("../controllers/products/get-images-by-product-id-controller");
 const getNumberOfFavs = require("../controllers/products/get-number-of-favs-controller");
 const getProductByIdProduct = require("../controllers/products/get-product-by-idProduct-controller");
@@ -22,8 +24,9 @@ const router = express.Router();
 // const nombreFuncion = require('../')
 
 // URL's PÚBLICAS:
-
 router.route("/").get(getAllProducts);
+router.route("/ordered-by-times-visited").get(getAllProductsOrderedByTimesVisited);
+router.route("/new-products").get(getAllNewProducts);
 router.route("/:idProduct").get(getProductByIdProduct);
 router.route("/favorites/:idProduct").get(getNumberOfFavs);
 router.route("/times-visited/:idProduct").put(updateTimesVisitedById);

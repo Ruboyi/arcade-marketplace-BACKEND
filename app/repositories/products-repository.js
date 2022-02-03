@@ -131,6 +131,19 @@ async function countNumberOfFavs(idProduct) {
   return result
 }
 
+async function findAllProductsOrderedByTimesVisited() {
+  const pool = await getPool();
+  const sql = `SELECT * FROM products ORDER BY timesVisited DESC;`;
+  const [products] = await pool.query(sql);
+  return products;
+}
+async function findAllNewProducts() {
+  const pool = await getPool();
+  const sql = `SELECT * FROM products ORDER BY idProduct DESC;`;
+  const [products] = await pool.query(sql);
+  return products;
+}
+
 module.exports = {
   findAllProducts,
   addProduct,
@@ -142,4 +155,6 @@ module.exports = {
   removeFromFavoritesByIds,
   updateTimesVisited,
   countNumberOfFavs,
+  findAllProductsOrderedByTimesVisited,
+  findAllNewProducts
 };
