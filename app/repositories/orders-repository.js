@@ -77,6 +77,21 @@ async function acceptOrder(saleData, idProduct, idUserBuyer) {
   return updated.affectedRows === 1;
 }
 
+async function checkOrder(idUser) {
+  const check = 1
+  const pool = await getPool();
+  const sql = `
+    UPDATE orders INNER JOIN products ON orders.idProduct = products.idProduct INNER JOIN users ON users.idUser = products.idUser SET isChecked = ?
+    WHERE users.idUser = ?
+  `;
+  const [updated] = await pool.query(sql, [
+    check,
+    idUser,
+  ]);
+
+  return updated.affectedRows === 1;
+}
+
 async function discardAllOtherOrders(idUserBuyer, idProduct) {
   const pool = await getPool();
   const sql = `
@@ -124,4 +139,5 @@ module.exports = {
   findOrderById,
   findOrderStatusByProductId,
   findAllOrdersByIdUser,
+  checkOrder
 };

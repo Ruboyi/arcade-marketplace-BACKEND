@@ -8,6 +8,7 @@ const createOrderByProductId = require("../controllers/orders/create-order-by-pr
 const acceptOrderByProductId = require("../controllers/orders/accept-order-by-product-id-controller");
 const getOrderById = require("../controllers/orders/get-order-by-id-controller");
 const getAllOrdersByUserId = require("../controllers/orders/get-all-orders-by-id-user-controller");
+const checkOrdersByUserId = require("../controllers/orders/check-orders-by-user-id-controller");
 const router = express.Router();
 
 router.route("/:idOrder").all(validateAuth).get(getOrderById);
@@ -19,7 +20,7 @@ router
   .route("/user/:idUserBuyer")
   .all(validateAuth)
   .get(getAllOrdersByUserBuyerId);
-router.route("/sellerUser/:idUser").all(validateAuth).get(getAllOrdersByUserId);
+router.route("/sellerUser/:idUser").all(validateAuth).get(getAllOrdersByUserId).put(checkOrdersByUserId);
 router.route("/:idProduct").all(validateAuth).post(createOrderByProductId);
 router
   .route("/:idProduct/:idUserBuyer")

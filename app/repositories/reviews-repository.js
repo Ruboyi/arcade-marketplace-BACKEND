@@ -4,9 +4,23 @@ const getPool = require("../infrastructure/database-infrastructure");
 
 async function findAllUserReviewsById(idUser) {
   const pool = await getPool();
-  const sql = `SELECT idReview, opinion, rating, isSeller, idUserReviewer, reviews.idUser, nameUser, email, image FROM reviews INNER JOIN users ON reviews.idUserReviewer = users.idUser WHERE reviews.idUser = ?`;
+  const sql = `SELECT idReview, opinion, rating, isSeller, idUserReviewer, reviews.idUser, nameUser, email, image, isChecked FROM reviews INNER JOIN users ON reviews.idUserReviewer = users.idUser WHERE reviews.idUser = ?`;
   const [reviews] = await pool.query(sql, idUser);
   return reviews;
+}
+
+async function checkReview(idUser) {
+  const check = 1
+  const pool = await getPool();
+  const sql = `
+    UPDATE reviews INNER JOIN users ON reviews.idUser = users.idUser SET isChecked = ?
+    WHERE users.idUser = ?
+  `;
+  const [updated] = await pool.query(sql, [
+    check,
+    idUser,
+  ]);
+  return updated.affectedRows === 1;
 }
 
 async function getAvgRatingById(idUser) {
@@ -39,4 +53,5 @@ module.exports = {
   findAllUserReviewsById,
   getAvgRatingById,
   addReview,
+  checkReview
 };
