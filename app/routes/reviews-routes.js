@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const checkReviewsByUserId = require("../controllers/reviews/check-reviews-by-user-id-controller");
 const createReviewForIdUser = require("../controllers/reviews/create-review-controller");
 const getAllUserReviewsByUserId = require("../controllers/reviews/get-all-user-reviews-by-user-id-controller");
 const getAvgRatingByUserId = require("../controllers/reviews/get-avg-reviews-by-id");
@@ -9,6 +10,6 @@ const router = express.Router();
 
 //aqui van las rutas
 router.route("/:idUser").get(getAllUserReviewsByUserId);
-router.route("/:idUser").all(validateAuth).post(createReviewForIdUser);
+router.route("/:idUser").all(validateAuth).post(createReviewForIdUser).put(checkReviewsByUserId);
 router.route("/rating/:idUser").get(getAvgRatingByUserId);
 module.exports = router;
