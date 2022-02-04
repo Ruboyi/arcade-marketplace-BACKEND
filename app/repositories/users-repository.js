@@ -67,14 +67,14 @@ async function getUserByVerificationCode(code) {
 }
 
 async function udpateUserById(data) {
-  const { idUser, nameUser, email, phone, bio, password } = data;
+  const { idUser, nameUser, email, province, phone, bio, password } = data;
   const pool = await getPool();
   const sql = `
     UPDATE users
-    SET nameUser = ?, email = ?, phone = ?, bio = ?, password = ?
+    SET nameUser = ?, email = ?, province = ?, phone = ?, bio = ?, password = ?
     WHERE idUser = ?
   `;
-  await pool.query(sql, [nameUser, email, phone, bio, password, idUser]);
+  await pool.query(sql, [nameUser, email, province, phone, bio, password, idUser]);
 
   return true;
 }

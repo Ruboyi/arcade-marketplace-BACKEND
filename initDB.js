@@ -54,6 +54,7 @@ async function initDB() {
         updatedAt DATE NULL DEFAULT NULL,
         verificationCode VARCHAR(255) NULL DEFAULT NULL,
         role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+        province VARCHAR(120) NULL DEFAULT NULL,
         PRIMARY KEY (idUser))
     `);
     // create table products
@@ -199,7 +200,7 @@ async function initDB() {
 
       // insert user
       await connection.query(`
-        INSERT INTO users(nameUser, email, password, image, createdAt, verifiedAt, verificationCode, role) 
+        INSERT INTO users(nameUser, email, password, image, createdAt, verifiedAt, verificationCode, role, province) 
         VALUES (
             "${name}",
             "${email}",
@@ -208,7 +209,8 @@ async function initDB() {
             "${mySQLDateString}",
             "${mySQLDateString}",
             "${verificationCode}",
-            "user"
+            "user",
+            "A Coruña"
         )
         `);
     }
