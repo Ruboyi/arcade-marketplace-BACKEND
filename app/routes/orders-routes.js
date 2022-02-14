@@ -9,6 +9,8 @@ const acceptOrderByProductId = require("../controllers/orders/accept-order-by-pr
 const getOrderById = require("../controllers/orders/get-order-by-id-controller");
 const getAllOrdersByUserId = require("../controllers/orders/get-all-orders-by-id-user-controller");
 const checkOrdersByUserId = require("../controllers/orders/check-orders-by-user-id-controller");
+const setSellerReviewedByUserId = require("../controllers/orders/set-seller-reviewed-controller");
+const setBuyerReviewedByUserId = require("../controllers/orders/set-buyer-reviewed-controller");
 const router = express.Router();
 
 router.route("/:idOrder").all(validateAuth).get(getOrderById);
@@ -21,10 +23,11 @@ router
   .all(validateAuth)
   .get(getAllOrdersByUserBuyerId);
 router.route("/sellerUser/:idUser").all(validateAuth).get(getAllOrdersByUserId).put(checkOrdersByUserId);
+router.route("/setSeller/:idUserSeller").all(validateAuth).put(setSellerReviewedByUserId)
+router.route("/setBuyer/:idUserBuyer").all(validateAuth).put(setBuyerReviewedByUserId)
 router.route("/:idProduct").all(validateAuth).post(createOrderByProductId);
 router
   .route("/:idProduct/:idUserBuyer")
   .all(validateAuth)
   .put(acceptOrderByProductId);
-
 module.exports = router;
