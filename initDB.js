@@ -104,6 +104,8 @@ async function initDB() {
         orderDate DATE NOT NULL,
         status ENUM('solicitado', 'rechazado', 'reservado', 'vendido') NOT NULL DEFAULT 'solicitado',
         isChecked TINYINT(1) NOT NULL DEFAULT '0',
+        isSellerReviewed TINYINT(1) NOT NULL DEFAULT '0',
+        isBuyerReviewed TINYINT(1) NOT NULL DEFAULT '0',
         orderSubject VARCHAR(120) NULL DEFAULT NULL,
         orderMessage VARCHAR(255) NULL DEFAULT NULL,
         orderTypeOfContact ENUM('phone', 'email') NULL DEFAULT 'email',
@@ -605,7 +607,7 @@ async function initDB() {
     `);
     await connection.query(`
     UPDATE orders
-      SET status = 'reservado',
+      SET status = 'vendido',
         reservationDate = '2022-01-20 12:16:42',
         saleDate = '2022-02-24 12:16:42',
         saleLocation = 'plaza de vigo, a coruña',
