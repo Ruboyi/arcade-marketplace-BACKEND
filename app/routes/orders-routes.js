@@ -11,6 +11,7 @@ const getAllOrdersByUserId = require("../controllers/orders/get-all-orders-by-id
 const checkOrdersByUserId = require("../controllers/orders/check-orders-by-user-id-controller");
 const setSellerReviewedByUserId = require("../controllers/orders/set-seller-reviewed-controller");
 const setBuyerReviewedByUserId = require("../controllers/orders/set-buyer-reviewed-controller");
+const setSoldByUserId = require("../controllers/orders/set-order-sold-by-user-id-controller");
 const router = express.Router();
 
 router.route("/:idOrder").all(validateAuth).get(getOrderById);
@@ -25,6 +26,7 @@ router
 router.route("/sellerUser/:idUser").all(validateAuth).get(getAllOrdersByUserId).put(checkOrdersByUserId);
 router.route("/setSeller/:idUserSeller").all(validateAuth).put(setSellerReviewedByUserId)
 router.route("/setBuyer/:idUserBuyer").all(validateAuth).put(setBuyerReviewedByUserId)
+router.route("/setSold/:idUserBuyer/:idOrder").all(validateAuth).put(setSoldByUserId)
 router.route("/:idProduct").all(validateAuth).post(createOrderByProductId);
 router
   .route("/:idProduct/:idUserBuyer")

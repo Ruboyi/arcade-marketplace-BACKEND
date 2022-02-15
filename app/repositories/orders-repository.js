@@ -152,6 +152,17 @@ async function setBuyerReviewed(idUser, idUserBuyer) {
   return updated.affectedRows === 1;
 }
 
+async function setSold(idUser, idUserBuyer, idOrder) {
+  const check = 'vendido'
+  const pool = await getPool();
+  const sql = `UPDATE orders INNER JOIN products ON orders.idProduct = products.idProduct INNER JOIN users ON users.idUser = products.idUser SET status = ?
+  WHERE users.idUser = ? AND orders.idUserBuyer = ? AND orders.idOrder = ?;`
+
+  const [updated] = await pool.query(sql, [check, idUser, idUserBuyer, idOrder]);
+
+  return updated.affectedRows === 1;
+}
+
 module.exports = {
   findAllOrdersByProductId,
   findAllOrdersByUserBuyerId,
@@ -163,5 +174,6 @@ module.exports = {
   findAllOrdersByIdUser,
   checkOrder,
   setSellerReviewed,
-  setBuyerReviewed
+  setBuyerReviewed,
+  setSold
 };
