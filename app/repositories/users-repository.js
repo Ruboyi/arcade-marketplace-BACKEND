@@ -9,6 +9,13 @@ async function findUserById(userId) {
   return user[0];
 }
 
+async function findAllUser() {
+  const pool = await getPool();
+  const sql = "SELECT * FROM users";
+  const [user] = await pool.query(sql);
+  return user;
+}
+
 async function createUser(user) {
   const pool = await getPool();
   const sql = `
@@ -74,7 +81,15 @@ async function udpateUserById(data) {
     SET nameUser = ?, email = ?, province = ?, phone = ?, bio = ?, password = ?
     WHERE idUser = ?
   `;
-  await pool.query(sql, [nameUser, email, province, phone, bio, password, idUser]);
+  await pool.query(sql, [
+    nameUser,
+    email,
+    province,
+    phone,
+    bio,
+    password,
+    idUser,
+  ]);
 
   return true;
 }
@@ -138,4 +153,5 @@ module.exports = {
   uploadUserProfileImage,
   removeUserById,
   findFavoritesByUserId,
+  findAllUser,
 };
