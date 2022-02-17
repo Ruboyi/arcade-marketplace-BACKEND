@@ -12,7 +12,7 @@ async function findUserById(userId) {
 async function findAllUser() {
   const pool = await getPool();
   const sql =
-    "SELECT idUser, image, nameUser, email, phone, createdAt FROM users";
+    "SELECT idUser as id,  nameUser, email, phone, createdAt FROM users";
   const [user] = await pool.query(sql);
   return user;
 }
