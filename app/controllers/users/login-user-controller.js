@@ -21,7 +21,14 @@ async function loginUser(req, res) {
     if (!user) {
       throwJsonError(403, "No existe un usuario con ese email y/o password");
     }
-    const { idUser, nameUser, role, password: passwordHash, verifiedAt } = user;
+    const {
+      idUser,
+      nameUser,
+      role,
+      password: passwordHash,
+      verifiedAt,
+      isBanned,
+    } = user;
     const isValidPassword = await bcrypt.compare(password, passwordHash);
     if (!isValidPassword) {
       throwJsonError(403, "No existe un usuario con ese email y/o password");
@@ -32,6 +39,14 @@ async function loginUser(req, res) {
         "Verifique su cuenta poder acceder a nuestros servicios"
       );
     }
+
+    if (isBanned) {
+      throwJsonError(
+        403,
+        "Su cuenta ha sido banneada temporalmente para más imformacion mandenos un correo a arcademarket@gmail.com"
+      );
+    }
+
     const { JWT_SECRET } = process.env;
     const tokenPayload = { idUser, nameUser, role };
     const token = jwt.sign(tokenPayload, JWT_SECRET, {
