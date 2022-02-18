@@ -43,7 +43,7 @@ async function createUser(user) {
 async function findUserByEmail(email) {
   const pool = await getPool();
   const sql =
-    "SELECT idUser, nameUser, email, role, password, verifiedAt FROM users WHERE email = ?";
+    "SELECT idUser, nameUser, email, role, password,verifiedAt, isBanned FROM users WHERE email = ?";
   const [user] = await pool.query(sql, email);
 
   return user[0];
@@ -142,6 +142,22 @@ async function findFavoritesByUserId(idUser) {
   return favorites;
 }
 
+async function blockUserById(id) {
+  const pool = await getPool();
+  const sql = `UPDATE arcade.users SET isBanned = '1' WHERE (idUser = ?);`;
+  await pool.query(sql, id);
+
+  return true;
+}
+
+async function desBlockUserById(id) {
+  const pool = await getPool();
+  const sql = `UPDATE arcade.users SET isBanned = '0' WHERE (idUser = ?);`;
+  await pool.query(sql, id);
+
+  return true;
+}
+
 module.exports = {
   findUserById,
   createUser,
@@ -155,4 +171,6 @@ module.exports = {
   removeUserById,
   findFavoritesByUserId,
   findAllUser,
+  blockUserById,
+  desBlockUserById,
 };

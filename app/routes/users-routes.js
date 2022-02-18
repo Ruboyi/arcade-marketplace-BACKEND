@@ -2,6 +2,7 @@
 
 const express = require("express");
 const validateUser = require("../controllers/users/activate-user-controller");
+const banUserById = require("../controllers/users/ban-user-by-id-controller");
 const deleteUserById = require("../controllers/users/delete-user-by-id-controller");
 const getAllUser = require("../controllers/users/get-all-user-controller");
 const getFavoritesByUserId = require("../controllers/users/get-favorites-by-user-id-controller");
@@ -29,7 +30,11 @@ router.route("/user/:idUser").get(getUserById);
 router.route("/").all(validateAuth).get(getAllUser).put(updateUser);
 router.route("/favorites").all(validateAuth).get(getFavoritesByUserId);
 router.route("/upload").all(validateAuth).post(uploadImageProfile);
-router.route("/:userId").all(validateAuth).delete(deleteUserById);
+router
+  .route("/:userId")
+  .all(validateAuth)
+  .delete(deleteUserById)
+  .put(banUserById);
 router.route("/profile").all(validateAuth).get(getUserProfile);
 
 module.exports = router;
