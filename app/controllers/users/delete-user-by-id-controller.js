@@ -11,13 +11,20 @@ async function deleteUserById(req, res) {
   try {
     const { userId } = req.params;
     await schema.validateAsync(userId);
-    const { idUser } = req.auth;
-    if (idUser !== Number(userId)) {
-      throwJsonError(400, "Acceso denegado");
-    }
-    await removeUserById(idUser);
+    const { idUser, role } = req.auth;
 
-    res.status(200).send({ message: "Usuario eliminado" });
+    if (role === "admin") {
+      await removeUserById(userId);
+      res.status(200).send({ message: "Usuario eliminado" });
+    } else {
+      if (idUser !== Number(userId)) {
+        throwJsonError(400, "Acceso denegado");
+      }
+
+      await removeUserById(idUser);
+
+      res.status(200).send({ message: "Usuario eliminado" });
+    }
   } catch (error) {
     createJsonError(error, res);
   }
