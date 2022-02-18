@@ -28,12 +28,12 @@ async function banUserById(req, res) {
     if (isBanned) {
       await desBlockUserById(userId);
       res.status(200);
-      res.send({ message: "Usuario desbaneado" });
+      res.send({ message: "¡ Usuario desbaneado correctamente !" });
     } else {
       await blockUserById(userId);
 
       res.status(200);
-      res.send({ message: "Usuario banneado" });
+      res.send({ message: "¡ Usuario banneado correctamente !" });
     }
   } catch (error) {
     createJsonError(error, res);
