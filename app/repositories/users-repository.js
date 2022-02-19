@@ -26,7 +26,8 @@ async function createUser(user) {
     ) VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   const { nameUser, email, passwordHash, phone, verificationCode } = user;
-  const now = new Date();
+  const date = new Date();
+  const now = date.toLocaleDateString();
   const [created] = await pool.query(sql, [
     nameUser,
     email,
