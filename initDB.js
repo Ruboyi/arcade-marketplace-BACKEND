@@ -138,7 +138,8 @@ async function initDB() {
           REFERENCES arcade.users (idUser) ON DELETE CASCADE,
         CONSTRAINT orders_ibfk_2
           FOREIGN KEY (idProduct)
-          REFERENCES arcade.products (idProduct))
+          REFERENCES arcade.products (idProduct)
+          ON DELETE CASCADE)
     `);
     // create table productImages
     await connection.query(`

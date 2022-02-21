@@ -17,14 +17,24 @@ async function deleteProductById(req, res) {
     if (!product) {
       throwJsonError(400, "Producto no existe");
     }
-    const { idUser } = req.auth;
+    const { idUser, role } = req.auth;
     const { idUser: userId } = product;
-    if (idUser !== Number(userId)) {
-      throwJsonError(400, "Acceso denegado");
-    }
-    await removeProductById(idProduct);
 
-    res.status(200).send({ message: `${idProduct} borrado correctamente!` });
+    if (role === "admin") {
+      await removeProductById(idProduct);
+      res
+        .status(200)
+        .send({ message: `Producto ${idProduct} borrado correctamente!` });
+    } else {
+      if (idUser !== Number(userId)) {
+        throwJsonError(400, "Acceso denegado");
+      }
+      await removeProductById(idProduct);
+
+      res
+        .status(200)
+        .send({ message: `Producto ${idProduct} borrado correctamente!` });
+    }
   } catch (error) {
     createJsonError(error, res);
   }
