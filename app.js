@@ -20,10 +20,12 @@ const productsRouter = require("./app/routes/products-routes");
 const usersRouter = require("./app/routes/users-routes");
 const ordersRouter = require("./app/routes/orders-routes");
 const reviewsRouter = require("./app/routes/reviews-routes");
+const reportsRouter = require("./app/routes/reports-routes");
 
 app.use("/api/v1/products/", productsRouter);
 app.use("/api/v1/users/", usersRouter);
 app.use("/api/v1/orders/", ordersRouter);
 app.use("/api/v1/reviews/", reviewsRouter);
+app.use("/api/v1/reports/", reportsRouter);
 
 app.listen(PORT, () => console.log("Running", PORT));
