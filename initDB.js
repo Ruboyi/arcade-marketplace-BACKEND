@@ -160,6 +160,7 @@ async function initDB() {
     CREATE TABLE IF NOT EXISTS productReports (
         idProductReport INT NOT NULL AUTO_INCREMENT,
         reason ENUM('sospecha de fraude', 'fraude', 'no asistencia a la cita', 'mal comportamiento o abuso', 'articulo defectuoso o incorrecto', 'otras causas') NULL DEFAULT NULL,
+        description VARCHAR(255) NOT NULL,
         reportDate DATE NOT NULL,
         isChecked TINYINT(1) DEFAULT '0',
         idUser INT NOT NULL,
