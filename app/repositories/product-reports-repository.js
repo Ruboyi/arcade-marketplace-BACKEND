@@ -24,6 +24,15 @@ async function addProductReport(productReport) {
   return created.insertId;
 }
 
+async function findAllProductsReports() {
+  const pool = await getPool();
+  const sql = "SELECT * FROM productReports";
+  const [reports] = await pool.query(sql);
+
+  return reports;
+}
+
 module.exports = {
   addProductReport,
+  findAllProductsReports,
 };

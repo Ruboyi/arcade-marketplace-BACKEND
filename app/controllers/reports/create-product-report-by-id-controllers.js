@@ -28,7 +28,6 @@ async function createProductReportById(req, res) {
       isChecked: 0,
       ...body,
     };
-    console.log(productReport);
 
     const reportId = await addProductReport(productReport);
     res.status(200);
