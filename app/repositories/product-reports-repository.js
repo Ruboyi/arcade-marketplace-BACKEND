@@ -33,7 +33,16 @@ async function findAllProductsReports() {
   return reports;
 }
 
+async function removeProductReportById(id) {
+  const pool = await getPool();
+  const sql = "DELETE from productReports WHERE idProductReport = ?";
+  await pool.query(sql, id);
+
+  return true;
+}
+
 module.exports = {
   addProductReport,
   findAllProductsReports,
+  removeProductReportById,
 };
