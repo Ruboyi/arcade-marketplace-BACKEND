@@ -26,7 +26,8 @@ async function addProductReport(productReport) {
 
 async function findAllProductsReports() {
   const pool = await getPool();
-  const sql = "SELECT * FROM productReports";
+  const sql =
+    "SELECT idProductReport as id, reason, reportDate, idUser, idProduct FROM productReports";
   const [reports] = await pool.query(sql);
 
   return reports;
