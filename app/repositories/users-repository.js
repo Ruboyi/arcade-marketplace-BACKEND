@@ -21,17 +21,18 @@ async function createUser(user) {
   const pool = await getPool();
   const sql = `
     INSERT INTO users(
-      nameUser, email, password, phone, 
+      nameUser, email, password, phone, image,
       createdAt, verificationCode, role
-    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
-  const { nameUser, email, passwordHash, phone, verificationCode } = user;
-  const date = new Date();
-  const now = date.toLocaleDateString();
+  const { nameUser, email, passwordHash, image, phone, verificationCode } =
+    user;
+  const now = new Date();
   const [created] = await pool.query(sql, [
     nameUser,
     email,
     passwordHash,
+    image,
     phone,
     now,
     verificationCode,
