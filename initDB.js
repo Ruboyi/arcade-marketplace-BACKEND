@@ -61,7 +61,7 @@ async function initDB() {
         nameUser VARCHAR(120) NOT NULL,
         email VARCHAR(120) NOT NULL,
         password VARCHAR(120) NOT NULL,
-        image VARCHAR(120) NULL DEFAULT NULL,
+        image VARCHAR(300) NULL DEFAULT NULL,
         phone VARCHAR(120) NULL DEFAULT NULL,
         bio VARCHAR(120) NULL DEFAULT NULL,
         createdAt DATE NOT NULL,

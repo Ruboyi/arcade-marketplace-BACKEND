@@ -16,6 +16,7 @@ const schema = Joi.object().keys({
   email: Joi.string().email().required(),
   password: Joi.string().min(4).max(20).required(),
   verifyPassword: Joi.ref("password"),
+  image: Joi.string().min(3),
 });
 
 async function registerUser(req, res) {
@@ -23,6 +24,7 @@ async function registerUser(req, res) {
     const { body } = req;
     await schema.validateAsync(body);
     const { nameUser, email, password, image } = body;
+
     const user = await findUserByEmail(email);
     if (user) {
       throwJsonError(409, "Ya existe un usuario con ese email");
