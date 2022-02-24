@@ -22,12 +22,12 @@ const router = express.Router();
 
 // URL's PÚBLICAS, por ejemplo:
 // router.route('/').get(nombreFuncion);
+router.route("/password/:code").put(udpatePassword);
 router.route("/register").post(registerUser);
 router.route("/activation").get(validateUser);
 router.route("/recovery-password").post(recoveryPassword);
 router.route("/login").post(loginUser);
 router.route("/user/:idUser").get(getUserById);
-router.route("/password").post(udpatePassword);
 
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
