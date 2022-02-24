@@ -43,7 +43,7 @@ async function createUser(user) {
 async function findUserByEmail(email) {
   const pool = await getPool();
   const sql =
-    "SELECT idUser, nameUser, email, role, password,verifiedAt, isBanned FROM users WHERE email = ?";
+    "SELECT idUser, nameUser, email, role, password, verifiedAt, verificationCode, isBanned FROM users WHERE email = ?";
   const [user] = await pool.query(sql, email);
 
   return user[0];

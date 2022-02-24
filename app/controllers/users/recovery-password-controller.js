@@ -10,13 +10,15 @@ const {
   sendMailRecoveryPassword,
 } = require("../../helpers/mail-smtp-SendGrid");
 
-const schema = Joi.string().email().required();
+const schema = Joi.object().keys({
+  email: Joi.string().email().required(),
+});
 
 async function recoveryPassword(req, res) {
   try {
     const { body } = req;
-    await schema.validateAsync(body);
 
+    await schema.validateAsync(body);
     const { email } = body;
 
     const user = await findUserByEmail(email);
@@ -24,23 +26,12 @@ async function recoveryPassword(req, res) {
       throwJsonError(400, "No existe usuario con este correo");
     }
 
-    const { idUser, nameUser } = user;
+    const { nameUser, verificationCode } = user;
 
-    const { JWT_SECRET } = process.env;
-    const tokenPayload = { idUser, nameUser };
-    const token = jwt.sign(tokenPayload, JWT_SECRET, {
-      expiresIn: "365 days",
-    });
-
-    await sendMailRecoveryPassword(nameUser, email, token);
-
-    const response = {
-      accessToken: token,
-      expiresIn: "365 days",
-    };
+    await sendMailRecoveryPassword(nameUser, email, verificationCode);
 
     res.status(200);
-    res.send(response);
+    res.send({ message: "Correo enviado correctamente" });
   } catch (error) {
     createJsonError(error, res);
   }

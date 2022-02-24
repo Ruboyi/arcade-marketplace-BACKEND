@@ -24,16 +24,16 @@ const router = express.Router();
 // router.route('/').get(nombreFuncion);
 router.route("/register").post(registerUser);
 router.route("/activation").get(validateUser);
-router.route("/recoveryPassword").post(recoveryPassword);
+router.route("/recovery-password").post(recoveryPassword);
 router.route("/login").post(loginUser);
 router.route("/user/:idUser").get(getUserById);
+router.route("/password").post(udpatePassword);
 
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route("/").all(validateAuth).get(getAllUser).put(updateUser);
 router.route("/favorites").all(validateAuth).get(getFavoritesByUserId);
 router.route("/upload").all(validateAuth).post(uploadImageProfile);
-router.route("/upload-password").all(validateAuth).post(udpatePassword);
 router
   .route("/:userId")
   .all(validateAuth)

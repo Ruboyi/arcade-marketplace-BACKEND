@@ -4,7 +4,7 @@ const sgMail = require("@sendgrid/mail");
 const createJsonError = require("../errors/create-json-error");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const { HTTP_SERVER } = process.env;
+const { HTTP_SERVER, FRONTEND_URL } = process.env;
 
 async function sendMailRegister(name, email, code) {
   try {
@@ -60,7 +60,7 @@ async function sendMailPurchaseOrderNotif(name, email) {
 
 async function sendMailRecoveryPassword(name, email, code) {
   try {
-    const linkRecoveryPassword = `${HTTP_SERVER}/api/v1/users/password/${code}`;
+    const linkRecoveryPassword = `${FRONTEND_URL}/password/${code}`;
 
     const msg = {
       to: email,
