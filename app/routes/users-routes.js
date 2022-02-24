@@ -9,7 +9,9 @@ const getFavoritesByUserId = require("../controllers/users/get-favorites-by-user
 const getUserById = require("../controllers/users/get-user-by-id-controller");
 const getUserProfile = require("../controllers/users/get-user-profile-controller");
 const loginUser = require("../controllers/users/login-user-controller");
+const recoveryPassword = require("../controllers/users/recovery-password-controller");
 const registerUser = require("../controllers/users/register-user-controller");
+const udpatePassword = require("../controllers/users/update-password-by-id-controller");
 const updateUser = require("../controllers/users/update-user-controller");
 const uploadImageProfile = require("../controllers/users/upload-user-image-profile-controller");
 const validateAuth = require("../middlewares/validate-auth");
@@ -22,6 +24,7 @@ const router = express.Router();
 // router.route('/').get(nombreFuncion);
 router.route("/register").post(registerUser);
 router.route("/activation").get(validateUser);
+router.route("/recoveryPassword").post(recoveryPassword);
 router.route("/login").post(loginUser);
 router.route("/user/:idUser").get(getUserById);
 
@@ -30,6 +33,7 @@ router.route("/user/:idUser").get(getUserById);
 router.route("/").all(validateAuth).get(getAllUser).put(updateUser);
 router.route("/favorites").all(validateAuth).get(getFavoritesByUserId);
 router.route("/upload").all(validateAuth).post(uploadImageProfile);
+router.route("/upload-password").all(validateAuth).post(udpatePassword);
 router
   .route("/:userId")
   .all(validateAuth)
