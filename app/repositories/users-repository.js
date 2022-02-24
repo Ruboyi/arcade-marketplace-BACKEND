@@ -158,6 +158,18 @@ async function desBlockUserById(id) {
   return true;
 }
 
+async function udpatePassworById(idUser, password) {
+  const pool = await getPool();
+  const sql = `
+    UPDATE users
+    SET password = ?
+    WHERE idUser = ?
+  `;
+  await pool.query(sql, [password, idUser]);
+
+  return true;
+}
+
 module.exports = {
   findUserById,
   createUser,
@@ -173,4 +185,5 @@ module.exports = {
   findAllUser,
   blockUserById,
   desBlockUserById,
+  udpatePassworById,
 };
