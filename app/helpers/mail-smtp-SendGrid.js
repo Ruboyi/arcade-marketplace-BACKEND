@@ -74,7 +74,7 @@ async function sendMailRecoveryPassword(name, email, code) {
       Si no has sido tú quien lo ha solicitado, puedes ignorar este mensaje.
       
       
-      Por seguridad, nunca compartas este enlace con otras personas. Desde Wallapop en ningún caso te pediremos que lo hagas.
+      Por seguridad, nunca compartas este enlace con otras personas. Desde Arcade Marketplace en ningún caso te pediremos que lo hagas.
       
       ${linkRecoveryPassword}
       `,

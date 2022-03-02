@@ -71,6 +71,8 @@ async function initDB() {
         role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
         province VARCHAR(120) NULL DEFAULT NULL,
         isBanned TINYINT(1)  DEFAULT '0',
+        isOnline TINYINT(1)  DEFAULT '0',
+        lastLogin DATETIME NULL DEFAULT NULL,
         PRIMARY KEY (idUser))
     `);
     // create table products
@@ -82,7 +84,7 @@ async function initDB() {
         price DECIMAL(10,2) NOT NULL,
         province VARCHAR(120) NOT NULL,
         location VARCHAR(120) NOT NULL,
-        createdAt DATE NOT NULL,
+        createdAt DATETIME NOT NULL,
         updatedAt DATE NULL DEFAULT NULL,
         category ENUM('consolas', 'videojuegos', 'accesorios', 'arcades') NOT NULL,
         state ENUM('nuevo', 'seminuevo', 'usado') NOT NULL,

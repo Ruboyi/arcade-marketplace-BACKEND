@@ -9,6 +9,7 @@ const getFavoritesByUserId = require("../controllers/users/get-favorites-by-user
 const getUserById = require("../controllers/users/get-user-by-id-controller");
 const getUserProfile = require("../controllers/users/get-user-profile-controller");
 const loginUser = require("../controllers/users/login-user-controller");
+const logoutUser = require("../controllers/users/logout-user-controller");
 const recoveryPassword = require("../controllers/users/recovery-password-controller");
 const registerUser = require("../controllers/users/register-user-controller");
 const udpatePassword = require("../controllers/users/update-password-by-id-controller");
@@ -32,6 +33,7 @@ router.route("/user/:idUser").get(getUserById);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route("/").all(validateAuth).get(getAllUser).put(updateUser);
+router.route("/logout").all(validateAuth).get(logoutUser);
 router.route("/favorites").all(validateAuth).get(getFavoritesByUserId);
 router.route("/upload").all(validateAuth).post(uploadImageProfile);
 router

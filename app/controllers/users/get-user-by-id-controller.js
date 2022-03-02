@@ -14,9 +14,27 @@ async function getUserById(req, res) {
     if (!user) {
       throwJsonError(400, "El usuario no existe");
     }
-    const { nameUser, bio, email, image, createdAt, verifiedAt } = user;
+    const {
+      nameUser,
+      bio,
+      email,
+      image,
+      createdAt,
+      verifiedAt,
+      isOnline,
+      lastLogin,
+    } = user;
     res.status(200);
-    res.send({ nameUser, bio, email, image, createdAt, verifiedAt });
+    res.send({
+      nameUser,
+      bio,
+      email,
+      image,
+      createdAt,
+      verifiedAt,
+      isOnline,
+      lastLogin,
+    });
   } catch (error) {
     createJsonError(error, res);
   }
