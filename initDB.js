@@ -197,7 +197,7 @@ async function initDB() {
     CREATE TABLE IF NOT EXISTS reviews (
         idReview INT NOT NULL AUTO_INCREMENT,
         opinion VARCHAR(255) NULL DEFAULT NULL,
-        createdAt DATE NOT NULL,
+        createdAt DATETIME NOT NULL,
         rating INT NOT NULL,
         isChecked TINYINT(1) NOT NULL DEFAULT '0',
         isSeller TINYINT(1) NOT NULL,
@@ -541,6 +541,121 @@ async function initDB() {
         0,
         1          
         )
+        `);
+    console.log("Creating 10 reviews...");
+
+    await connection.query(`
+    INSERT INTO reviews(
+      idReview,
+      opinion,
+      createdAt,
+      rating,
+      isChecked,
+      isSeller,
+      idUserReviewer,
+      idUser
+      )
+      VALUES
+      (
+        1,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        1,
+        2
+      ),
+      (
+        2,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        2,
+        1
+      ),
+      (
+        3,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        3,
+        4
+      ),
+      (
+        4,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        4,
+        3
+      ),
+      (
+        5,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        5,
+        6
+      ),
+      (
+        6,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        6,
+        5
+      ),
+      (
+        7,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        7,
+        8
+      ),
+      (
+        8,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        8,
+        7
+      ),
+      (
+        9,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        9,
+        10
+      ),
+      (
+        10,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
+        '2021-12-24 12:16:42',
+        5,
+        0,
+        1,
+        10,
+        9
+      )
         `);
 
     // generate 10 purchase orders
