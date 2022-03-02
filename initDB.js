@@ -587,7 +587,8 @@ async function initDB() {
         4
       ),
       (
-        4,1 recomendado!',
+        4,
+        'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
         '2021-12-24 12:16:42',
         5,
         0,
@@ -628,7 +629,9 @@ async function initDB() {
       (
         8,
         'Puntual, producto en buen estado, simpático ¡100 % recomendado!',
-        '2021-12-24 12:16:42',1
+        '2021-12-24 12:16:42',
+        5,
+        0,
         1,
         8,
         7
@@ -653,7 +656,7 @@ async function initDB() {
         10,
         9
       )
-        `);
+      `);
 
     // generate 10 purchase orders
     console.log("Creating 10 purchase orders...");
