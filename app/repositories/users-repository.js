@@ -170,6 +170,32 @@ async function udpatePassworByNameUser(nameUser, password) {
   return true;
 }
 
+async function updateUserLoginById(id) {
+  const pool = await getPool();
+  const sql = `UPDATE users SET isOnline = '1' WHERE (idUser = ?);`;
+  await pool.query(sql, id);
+
+  return true;
+}
+
+async function updateUserLogoutById(id) {
+  const pool = await getPool();
+  const sql = `UPDATE users SET isOnline = '0' WHERE (idUser = ?);`;
+  await pool.query(sql, id);
+
+  return true;
+}
+
+async function updateLastLoginById(id) {
+  const now = new Date();
+  console.log(now);
+  const pool = await getPool();
+  const sql = `UPDATE users SET lastLogin = ?  WHERE (idUser = ?);`;
+  await pool.query(sql, [now, id]);
+
+  return true;
+}
+
 module.exports = {
   findUserById,
   createUser,
@@ -186,4 +212,7 @@ module.exports = {
   blockUserById,
   desBlockUserById,
   udpatePassworByNameUser,
+  updateUserLoginById,
+  updateUserLogoutById,
+  updateLastLoginById,
 };

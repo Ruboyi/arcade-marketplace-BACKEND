@@ -5,7 +5,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const createJsonError = require("../../errors/create-json-error");
 const throwJsonError = require("../../errors/throw-json-error");
-const { findUserByEmail } = require("../../repositories/users-repository");
+const {
+  findUserByEmail,
+  updateUserLoginById,
+} = require("../../repositories/users-repository");
 const schema = Joi.object().keys({
   email: Joi.string().email().required(),
   password: Joi.string().min(4).max(20).required(),
@@ -57,6 +60,8 @@ async function loginUser(req, res) {
       expiresIn: "365 days",
       role: role,
     };
+
+    await updateUserLoginById(idUser);
 
     res.status(200);
     res.send(response);
