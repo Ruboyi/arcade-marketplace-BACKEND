@@ -20,6 +20,20 @@ const usersArray = [
   "admin1",
 ];
 
+const bioArray = [
+  "Apasionada de todos los juegos de SUPER MARIO",
+  "Me encanta todo los relacionado con el gamming Retro",
+  "Compro y vendo todo lo quieras y mas",
+  "Gran fan de tecnologias retro",
+  "A parte del futbol me dedico al vender Arcades",
+  "Especializado en la venta de accesorios de PS4",
+  "Si me compras te invito a una pizza",
+  "De siempre enamorado de los juegos retro",
+  "chao chao chao",
+  "A pesar de mi edad me siguen gustando esto juegos",
+  "admin1",
+];
+
 const phoneArray = [
   "603142556",
   "634564223",
@@ -218,6 +232,7 @@ async function initDB() {
       let name = usersArray[i];
       let email = `${usersArray[i]}@yopmail.com`;
       let phone = phoneArray[i];
+      let bio = bioArray[i];
       const password = "123456";
       const passwordHash = await bcrypt.hash(password, 12);
       const image = avatarsArray[i];
@@ -228,13 +243,14 @@ async function initDB() {
 
       // insert user
       await connection.query(`
-        INSERT INTO users(nameUser, email, password, image, phone, createdAt, verifiedAt, verificationCode, role, province) 
+        INSERT INTO users(nameUser, email, password, image, phone, bio, createdAt, verifiedAt, verificationCode, role, province) 
         VALUES (
             "${name}",
             "${email}",
             "${passwordHash}",
             "${image}",
             '${phone}',
+            '${bio}',
             "${mySQLDateString}",
             "${mySQLDateString}",
             "${verificationCode}",
