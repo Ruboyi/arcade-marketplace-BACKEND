@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const getPool = require('../infrastructure/database-infrastructure');
+const getPool = require("../infrastructure/database-infrastructure");
 
 async function findAllProducts() {
   const pool = await getPool();
@@ -20,11 +20,20 @@ async function addProduct(product) {
         createdAt,
         category,
         state,
-        idUser
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        idUser,
+        province
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
-  const { title, description, price, location, category, state, idUser } =
-    product;
+  const {
+    title,
+    description,
+    price,
+    location,
+    category,
+    state,
+    idUser,
+    province,
+  } = product;
   const [created] = await pool.query(sql, [
     title,
     description,
@@ -33,7 +42,8 @@ async function addProduct(product) {
     now,
     category,
     state,
-    idUser
+    idUser,
+    province,
   ]);
 
   return created.insertId;
@@ -56,7 +66,7 @@ async function findProductsByUserId(idUser) {
 
 async function findProductByidProduct(idProduct) {
   const pool = await getPool();
-  const sql = 'SELECT * FROM products WHERE idProduct = ?';
+  const sql = "SELECT * FROM products WHERE idProduct = ?";
   const [product] = await pool.query(sql, idProduct);
 
   return product[0];
@@ -78,7 +88,7 @@ async function updateProduct(idProduct, product) {
     category,
     state,
     now,
-    idProduct
+    idProduct,
   ]);
 
   return result.affectedRows === 1;
@@ -86,7 +96,7 @@ async function updateProduct(idProduct, product) {
 
 async function removeProductById(idProduct) {
   const pool = await getPool();
-  const sql = 'DELETE FROM products WHERE idProduct = ?';
+  const sql = "DELETE FROM products WHERE idProduct = ?";
   await pool.query(sql, idProduct);
 
   return true;
@@ -104,31 +114,27 @@ async function addToFavorites(idUser, idProduct) {
 
 async function removeFromFavoritesByIds(idUser, idProduct) {
   const pool = await getPool();
-  const sql = 'DELETE FROM favorites WHERE idUser = ? && idProduct = ?';
+  const sql = "DELETE FROM favorites WHERE idUser = ? && idProduct = ?";
   await pool.query(sql, [idUser, idProduct]);
 
   return true;
 }
 
 async function updateTimesVisited(idProduct, timesVisited) {
-
   const pool = await getPool();
   const sql = `
     UPDATE products SET timesVisited= ? WHERE idProduct = ?`;
-  const [result] = await pool.query(sql, [
-    timesVisited,
-    idProduct
-  ]);
+  const [result] = await pool.query(sql, [timesVisited, idProduct]);
 
   return result.affectedRows === 1;
 }
 
 async function countNumberOfFavs(idProduct) {
-  const pool = await getPool()
+  const pool = await getPool();
   const sql = `SELECT COUNT(*) as numberOfFavs from favorites WHERE idProduct = ?`;
-  const [result] = await pool.query(sql, [idProduct])
+  const [result] = await pool.query(sql, [idProduct]);
 
-  return result
+  return result;
 }
 
 async function findAllProductsOrderedByTimesVisited() {
@@ -156,5 +162,5 @@ module.exports = {
   updateTimesVisited,
   countNumberOfFavs,
   findAllProductsOrderedByTimesVisited,
-  findAllNewProducts
+  findAllNewProducts,
 };

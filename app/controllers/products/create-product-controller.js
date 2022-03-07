@@ -17,6 +17,7 @@ const schema = Joi.object().keys({
   ),
   state: Joi.string().valid("nuevo", "seminuevo", "usado"),
   idUser: Joi.number().integer().positive().required(),
+  province: Joi.string().required(),
 });
 
 async function createProduct(req, res) {
@@ -25,8 +26,10 @@ async function createProduct(req, res) {
     const { idUser } = req.auth;
     const product = { ...body, idUser: idUser };
     await schema.validateAsync(product);
+
     const productId = await addProduct(product);
 
+    console.log(productId);
     res.status(201);
     res.send({
       message: `Producto ${productId} creado correctamente`,
