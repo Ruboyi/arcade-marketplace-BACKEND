@@ -64,10 +64,28 @@ async function removeImageById(idImage) {
   return result.affectedRows === 1;
 }
 
+async function removeImageByName(nameImage) {
+  const pool = await getPool();
+  const sql = `DELETE FROM productImages WHERE nameImage = ?`;
+  const [result] = await pool.query(sql, nameImage);
+
+  return result.affectedRows === 1;
+}
+
+async function findImageByImageName(nameImage) {
+  const pool = await getPool();
+  const sql = `SELECT * FROM productImages WHERE nameImage = ?`;
+  const [image] = await pool.query(sql, nameImage);
+
+  return image[0];
+}
+
 module.exports = {
   addImageByProductId,
   removeMainImageByidProduct,
   findImagesByProductId,
   findImageByImageId,
-  removeImageById
+  removeImageById,
+  removeImageByName,
+  findImageByImageName
 };

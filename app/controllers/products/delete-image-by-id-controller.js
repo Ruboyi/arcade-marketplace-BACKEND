@@ -1,18 +1,16 @@
 'use strict';
 
-const Joi = require('joi');
 const createJsonError = require('../../errors/create-json-error');
 const throwJsonError = require('../../errors/throw-json-error');
-const { findImageByImageId, removeImageById } = require('../../repositories/product-images-repository');
+const { removeImageByName, findImageByImageName } = require('../../repositories/product-images-repository');
 const { findProductByidProduct } = require('../../repositories/products-repository');
 
-const schema = Joi.number().positive().integer().required();
 
-async function deleteImageById(req, res) {
+async function deleteImageByName(req, res) {
   try {
-    const { idImage } = req.params;
-    await schema.validateAsync(idImage);
-    const image = await findImageByImageId(idImage);
+    const { nameImage } = req.params;
+
+    const image = await findImageByImageName(nameImage);
     if (!image) {
       throwJsonError(400, 'La imágen no existe');
     }
@@ -27,12 +25,12 @@ async function deleteImageById(req, res) {
       throwJsonError(400, 'Acceso denegado');
     }
 
-    await removeImageById(idImage);
+    await removeImageByName(nameImage);
 
-    res.status(200).send({ message: `Imágen ${idImage} borrada correctamente.` });
+    res.status(200).send({ message: `Imágen ${nameImage} borrada correctamente.` });
   } catch (error) {
     createJsonError(error, res);
   }
 }
 
-module.exports = deleteImageById;
+module.exports = deleteImageByName;
