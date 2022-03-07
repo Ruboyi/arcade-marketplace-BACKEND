@@ -5,7 +5,7 @@ const express = require("express");
 const addToFavoritesByProductId = require("../controllers/products/add-to-favorites-by-product-idcontroller");
 const createProduct = require("../controllers/products/create-product-controller");
 const deleteFromFavoritesByIds = require("../controllers/products/delete-from-favorites-by-ids");
-const deleteImageById = require("../controllers/products/delete-image-by-id-controller");
+const deleteImageByName = require("../controllers/products/delete-image-by-id-controller");
 const deleteProductById = require("../controllers/products/delete-product-by-id-controller");
 const getAllNewProducts = require("../controllers/products/get-all-new-products-controller");
 const getAllProducts = require("../controllers/products/get-all-products-controller");
@@ -49,7 +49,7 @@ router
   .route("/images/:idProduct")
   .all(validateAuth)
   .post(uploadProductImageById);
-router.route("/images/:idImage").all(validateAuth).delete(deleteImageById);
+router.route("/images/:nameImage").all(validateAuth).delete(deleteImageByName);
 router
   .route("/favorites/:idProduct")
   .all(validateAuth)
