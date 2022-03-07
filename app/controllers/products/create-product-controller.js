@@ -29,7 +29,6 @@ async function createProduct(req, res) {
 
     const productId = await addProduct(product);
 
-    console.log(productId);
     res.status(201);
     res.send({
       message: `Producto ${productId} creado correctamente`,
