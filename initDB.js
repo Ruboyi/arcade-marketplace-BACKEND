@@ -125,7 +125,8 @@ async function initDB() {
           REFERENCES arcade.users (idUser),
         CONSTRAINT favorites_ibfk_2
           FOREIGN KEY (idProduct)
-          REFERENCES arcade.products (idProduct))
+          REFERENCES arcade.products (idProduct)
+          ON DELETE CASCADE)
     `);
     // create table orders
     await connection.query(`
@@ -207,7 +208,8 @@ async function initDB() {
         INDEX idUser (idUser ASC) VISIBLE,
         CONSTRAINT reviews_ibfk_1
           FOREIGN KEY (idUser)
-          REFERENCES arcade.users (idUser))
+          REFERENCES arcade.users (idUser)
+          ON DELETE CASCADE)
     `);
     console.log("DB restarted");
 
