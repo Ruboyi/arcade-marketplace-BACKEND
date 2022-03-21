@@ -188,7 +188,6 @@ async function updateUserLogoutById(id) {
 
 async function updateLastLoginById(id) {
   const now = new Date();
-  console.log(now);
   const pool = await getPool();
   const sql = `UPDATE users SET lastLogin = ?  WHERE (idUser = ?);`;
   await pool.query(sql, [now, id]);
