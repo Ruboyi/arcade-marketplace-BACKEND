@@ -16,6 +16,12 @@ async function findAllUser() {
   const [user] = await pool.query(sql);
   return user;
 }
+async function findAllUserPublic() {
+  const pool = await getPool();
+  const sql = "SELECT idUser,  nameUser, image FROM users";
+  const [user] = await pool.query(sql);
+  return user;
+}
 
 async function createUser(user) {
   const pool = await getPool();
@@ -214,4 +220,5 @@ module.exports = {
   updateUserLoginById,
   updateUserLogoutById,
   updateLastLoginById,
+  findAllUserPublic,
 };

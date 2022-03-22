@@ -5,6 +5,7 @@ const validateUser = require("../controllers/users/activate-user-controller");
 const banUserById = require("../controllers/users/ban-user-by-id-controller");
 const deleteUserById = require("../controllers/users/delete-user-by-id-controller");
 const getAllUser = require("../controllers/users/get-all-user-controller");
+const getAllUserPublic = require("../controllers/users/get-all-user-public-controller");
 const getFavoritesByUserId = require("../controllers/users/get-favorites-by-user-id-controller");
 const getUserById = require("../controllers/users/get-user-by-id-controller");
 const getUserProfile = require("../controllers/users/get-user-profile-controller");
@@ -23,13 +24,14 @@ const router = express.Router();
 
 // URL's PÚBLICAS, por ejemplo:
 // router.route('/').get(nombreFuncion);
+
 router.route("/password/:code").put(udpatePassword);
 router.route("/register").post(registerUser);
 router.route("/activation").get(validateUser);
 router.route("/recovery-password").post(recoveryPassword);
 router.route("/login").post(loginUser);
 router.route("/user/:idUser").get(getUserById);
-
+router.route("/public").get(getAllUserPublic);
 // URL's PRIVADAS (aquellas que tienen la función validateAuth por delante), por ejemplo:
 // router.route('/').all(validateAuth).delete(nombreFuncion)
 router.route("/").all(validateAuth).get(getAllUser).put(updateUser);
