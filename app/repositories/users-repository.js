@@ -18,7 +18,7 @@ async function findAllUser() {
 }
 async function findAllUserPublic() {
   const pool = await getPool();
-  const sql = "SELECT idUser,  nameUser, image FROM users";
+  const sql = "SELECT idUser,  nameUser, image, isOnline FROM users";
   const [user] = await pool.query(sql);
   return user;
 }
