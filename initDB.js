@@ -676,15 +676,15 @@ async function initDB() {
       1,
       3,
       '2021-12-24 12:16:42',
-      'Me gusta, lo quiero ya',
-      'Cuando podes quedar? lo quiero lo antes posible',
+      'Me gusta, tiene buena pinta',
+      'Cuando puedes quedar? Lo quiero lo antes posible',
       'phone'
     ),
     (
       2,
       7,
       '2021-12-29 12:16:42',
-      'esta bueno',
+      'Esta muy bien',
       'quiero verlo en persona',
       'email'
     ),
@@ -693,15 +693,15 @@ async function initDB() {
       10,
       '2022-01-04 12:16:42',
       'Te lo compro',
-      'Te lo compro pero a 20 euros',
+      'Te lo compro pero a 20 euros si te interesa',
       'email'
     ),
     (
       2,
       8,
       '2022-01-07 12:16:42',
-      'aguante boca',
-      'me da igual el producto, aguante boca',
+      'Parece interesante',
+      'Tu me dices cuando podemos quedar',
       'email'
     ),
     (
@@ -717,15 +717,15 @@ async function initDB() {
       4,
       '2022-01-02 12:16:42',
       'tiene buena pinta',
-      'tenes mas fotos? mandamelas al email! pepe@yopmail.com',
+      'tienes mas fotos? mandamelas al email! pepe@yopmail.com',
       'email'
     ),
     (
       1,
       9,
       '2021-12-29 12:16:42',
-      'lo quiero ya',
-      'Cuando podes quedar? lo quiero lo antes posible',
+      'Me encanta',
+      'Cuando puedes quedar? lo quiero lo antes posible',
       'phone'
     ),
     (
@@ -740,16 +740,16 @@ async function initDB() {
       6,
       4,
       '2022-01-19 12:16:42',
-      'apa, nice',
-      'te puedo pagar con pesos uruguayos?',
+      'Que bueno',
+      'te puedo pagar con Bizum',
       'email'
     ),
     (
       9,
       4,
       '2022-01-21 12:16:42',
-      'ia tu sabe',
-      'cuanto me saldria el combo por el juego y un cafe juntos?',
+      'Interesante',
+      'Concretame cuando te viene bien quedar',
       'phone'
     )
     `);
