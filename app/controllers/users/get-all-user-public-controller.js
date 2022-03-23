@@ -5,8 +5,6 @@ const { findAllUserPublic } = require("../../repositories/users-repository");
 
 async function getAllUserPublic(req, res) {
   try {
-    console.log("holiiiiasdasda");
-
     const users = await findAllUserPublic();
     res.status(200);
     res.send({ data: users });
